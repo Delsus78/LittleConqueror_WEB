@@ -4,7 +4,7 @@
       <!-- Left column (Main content) -->
       <div class="col-md-4">
         <div class="shadow-lg mb-5 rounded" style="height: 60vh;">
-          <user-basic-information />
+          <user-basic-information  :user="pasEncorePotoCalmeToiLeBackEstMemePasFini"/>
         </div>
       </div>
       <div class="col-md-4">
