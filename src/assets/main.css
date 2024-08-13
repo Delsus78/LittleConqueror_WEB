@@ -1,3 +1,7 @@
+body {
+    background-color: #0f172a;
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
@@ -18,4 +22,8 @@
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(124, 124, 124, 0.68);
     border-radius: 10px;
+}
+
+.shadow-top {
+    box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.75);
 }

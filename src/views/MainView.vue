@@ -1,12 +1,12 @@
 <template>
   <NavBar/>
   <RouterView />
-  <Background class="background"/>
+  <tanks-back-ground class="background"/>
 </template>
 <script setup>
 import { RouterView } from 'vue-router'
 import NavBar from "@/components/NavBar.vue";
-import Background from "@/components/Background.vue";
+import TanksBackGround from "@/components/TanksBackGround.vue";
 </script>
 <style scoped>
 .background {
@@ -16,7 +16,6 @@ import Background from "@/components/Background.vue";
   overflow: hidden;
   width: 100vw;
   height: 100vh;
-  background-color: black;
   z-index: -1000;
 }
 </style>
