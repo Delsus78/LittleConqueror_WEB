@@ -119,7 +119,6 @@ onMounted(() => {
     const vx = Math.cos(lastRadRotationOfTheCanon.value) * speed;
     const vy = Math.sin(lastRadRotationOfTheCanon.value) * speed;
 
-    // Créer un nouveau missile
     missiles.value.push({
       x: tankBallCenterX,
       y: tankBallCenterY,
@@ -136,7 +135,6 @@ onMounted(() => {
       missile.x += missile.vx;
       missile.y += missile.vy;
 
-      // Supprimer le missile s'il est hors de l'écran
       return missile.x > 0 && missile.x < width && missile.y > 0 && missile.y < height;
     });
   }
@@ -151,7 +149,7 @@ onMounted(() => {
   }
 
   function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Effacer l'ancien dessin
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     lastRadRotationOfTheCanon.value = tankCanonRotationOnCursor();
     updateMissiles();
@@ -165,7 +163,6 @@ onMounted(() => {
 
   setInterval(shootMissile, 3000);
 
-  // Suivre le mouvement du curseur
   document.addEventListener('mousemove', updateCursorPosition);
 
   function bgLoop() {
