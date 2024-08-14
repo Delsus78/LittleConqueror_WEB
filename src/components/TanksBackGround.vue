@@ -16,6 +16,7 @@ let canvas = null;
 let ctx = null;
 const cursor = ref({ x: 0, y: 0 });
 const missiles = ref([]);
+const explosions = ref([]);
 const lastRadRotationOfTheCanon = ref(0);
 
 let tankBallCenterX;
@@ -41,6 +42,50 @@ function initTank() {
   tankBallCenterY = tankBallRect.top + tankBallRect.height / 2;
 }
 
+
+// Explosion de particules
+function createExplosion(x, y) {
+  const numParticles = 20;
+  const explosionSize = 5;
+  const particles = [];
+
+  for (let i = 0; i < numParticles; i++) {
+    const angle = Math.random() * 2 * Math.PI;
+    const speed = Math.random() * 5 + 2;
+    particles.push({
+      x,
+      y,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      size: explosionSize,
+      life: 100
+    });
+  }
+
+  explosions.value.push(...particles);
+}
+
+function updateExplosions() {
+  explosions.value.forEach((particle, index) => {
+    particle.x += particle.vx;
+    particle.y += particle.vy;
+    particle.life -= 2;
+    particle.size *= 0.95;
+
+    if (particle.life <= 0) {
+      explosions.value.splice(index, 1);
+    }
+  });
+}
+
+function drawExplosions() {
+  ctx.fillStyle = 'orange';
+  explosions.value.forEach(particle => {
+    ctx.beginPath();
+    ctx.arc(particle.x, particle.y, particle.size, 0, 2 * Math.PI);
+    ctx.fill();
+  });
+}
 // END TANK BACKGROUND
 
 // BUBBLE BACKGROUND
@@ -154,6 +199,8 @@ onMounted(() => {
     lastRadRotationOfTheCanon.value = tankCanonRotationOnCursor();
     updateMissiles();
     drawMissiles();
+    updateExplosions();
+    drawExplosions();
   }
 
   window.addEventListener('resize', resizeCanvas);
@@ -164,6 +211,19 @@ onMounted(() => {
   setInterval(shootMissile, 3000);
 
   document.addEventListener('mousemove', updateCursorPosition);
+  document.addEventListener('click', (event) => {
+    const clickX = event.clientX;
+    const clickY = event.clientY;
+
+    missiles.value = missiles.value.filter((missile, index) => {
+      const distance = Math.hypot(missile.x - clickX, missile.y - clickY);
+      if (distance < 30) {
+        createExplosion(missile.x, missile.y);
+        return false;
+      }
+      return true;
+    });
+  });
 
   function bgLoop() {
     requestAnimationFrame(bgLoop);
