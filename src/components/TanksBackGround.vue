@@ -48,7 +48,7 @@ const arc = 100;
 const size = 7;
 const speed = 2;
 const parts = [];
-const colors = ['rgb(30, 41, 59)', 'rgb(226, 232, 240)', 'rgb(14, 165, 233)'];
+const colors = ['rgb(30, 41, 59)','rgba(226, 232, 240,0.3)', 'rgb(14, 165, 233)'];
 let time = 0;
 
 function create() {
@@ -140,7 +140,7 @@ onMounted(() => {
   }
 
   function drawMissiles() {
-    ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+    ctx.fillStyle = 'rgb(226, 232, 240)';
     missiles.value.forEach(missile => {
       ctx.beginPath();
       ctx.arc(missile.x, missile.y, 5, 0, 2 * Math.PI);
