@@ -1,12 +1,18 @@
 <template>
-  <NavBar/>
+  <NavBar v-if="isAuthenticated"/>
   <RouterView />
-  <tanks-back-ground class="background"/>
+  <tanks-back-ground v-if="isAuthenticated" class="background"/>
 </template>
 <script setup>
 import { RouterView } from 'vue-router'
 import NavBar from "@/components/NavBar.vue";
 import TanksBackGround from "@/components/TanksBackGround.vue";
+
+import { useAuthStore } from '@/stores';
+import {storeToRefs} from "pinia";
+
+const { isAuthenticated } = storeToRefs(useAuthStore());
+
 </script>
 <style scoped>
 .background {
