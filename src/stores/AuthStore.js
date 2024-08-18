@@ -9,7 +9,9 @@ const baseUrl = `${import.meta.env.VITE_API_URL}`;
 export const useAuthStore = defineStore('auth',() => {
     const user = ref(JSON.parse(localStorage.getItem('user')));
     const returnUrl = ref(null);
+
     const isAuthenticated = computed(() => user.value !== null && user.value !== undefined);
+    const userId = computed(() => user.value.authUser.userId);
 
     async function login(username, password) {
         console.log('login ...')
@@ -20,13 +22,21 @@ export const useAuthStore = defineStore('auth',() => {
             });
 
         // store user details and jwt in local storage to keep user logged in between page refreshes
-        localStorage.setItem('user', JSON.stringify(user.value));
+        const userJson = JSON.stringify(user.value);
+        if (userJson) {
+            localStorage.setItem('user', userJson);
+        }
+        else {
+            localStorage.removeItem('user');
+            console.error('No user data received');
+            return Promise.reject('No user data received');
+        }
 
         // redirect to previous url or default to home page
         await router.push(returnUrl.value || '/');
     }
     async function register(username, password, validRegistrationLink) {
-        await fetchWrapper.post(`${baseUrl}/register`, { username, password, validRegistrationLink })
+        await fetchWrapper.post(`${baseUrl}/registration`, { username, password, validRegistrationLink })
             .catch(error => {
                 console.error(error);
                 Promise.reject(error);
@@ -52,5 +62,5 @@ export const useAuthStore = defineStore('auth',() => {
         await router.push('/login');
     }
 
-    return { user, login, logout, isAuthenticated, register, changePassword }
+    return { user, login, logout, isAuthenticated, userId, register, changePassword }
 });
