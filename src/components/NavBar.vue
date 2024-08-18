@@ -1,8 +1,14 @@
 <script setup>
 import {computed} from "vue";
 import {useRoute} from "vue-router";
+import {useAuthStore} from "@/stores/index.js";
 const route=useRoute();
 const pageName = computed(() =>route.path.split('/')[1]);
+
+const logout = () => {
+    const authStore = useAuthStore();
+    authStore.logout();
+}
 </script>
 
 <template>
@@ -40,11 +46,15 @@ const pageName = computed(() =>route.path.split('/')[1]);
               <font-awesome-icon icon="user" size="lg" /> PROFILE
             </RouterLink>
           </li>
+          <li class="nav-item">
+            <a class="nav-link link-danger" href="#" @click="logout">
+              <font-awesome-icon icon="sign-out-alt" size="lg" />
+            </a>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
 </template>
-
 <style scoped>
 </style>

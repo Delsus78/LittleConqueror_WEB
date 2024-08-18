@@ -1,11 +1,13 @@
 <template>
-  <canvas id="backgroundCanvas"></canvas>
-  <div class="fixed-bottom ground-container">
-    <div id="baseTank">
-      <div id="tankBall"/>
-      <div id="canonTank"/>
+  <div class="background">
+    <canvas id="backgroundCanvas"></canvas>
+    <div class="fixed-bottom ground-container">
+      <div id="baseTank">
+        <div id="tankBall"/>
+        <div id="canonTank"/>
+      </div>
+      <div class="ground shadow-top"></div>
     </div>
-    <div class="ground shadow-top"></div>
   </div>
 </template>
 <script setup>
@@ -241,6 +243,15 @@ onBeforeUnmount(() => {
 });
 </script>
 <style scoped>
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1000;
+}
 canvas {
   position: absolute;
   top: 0;
