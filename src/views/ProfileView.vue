@@ -28,6 +28,7 @@ import { useUserDataStore} from "@/stores/index.js";
 import UserResources from "@/components/userData/UserResources.vue";
 import StatisticItem from "@/components/utilities/StatisticItem.vue";
 import {onMounted} from "vue";
+
 const { fetchUserInformations } = useUserDataStore();
 
 const userData = await fetchUserInformations();
@@ -37,7 +38,6 @@ onMounted(
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     }
-
 )
 </script>
 <style scoped>
