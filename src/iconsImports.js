@@ -1,18 +1,19 @@
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {
+    faCircleExclamation,
     faCity,
-    faCoins,
+    faCoins, faEye,
     faGasPump,
-    faGem,
+    faGem, faHandshake,
     faMapMarkedAlt,
     faMountain,
-    faPeopleRoof,
-    faSignOutAlt,
+    faPeopleRoof, faShieldAlt,
+    faSignOutAlt, faSnowplow,
     faTasks,
-    faTree,
+    faTree, faTriangleExclamation,
     faUser,
     faUtensils,
-    faWeightHanging
+    faWeightHanging, faWheatAwn
 } from "@fortawesome/free-solid-svg-icons";
 
 export function importIcons() {
@@ -29,6 +30,13 @@ export function importIcons() {
         faWeightHanging,
         faGem,
         faGasPump,
-        faPeopleRoof
+        faPeopleRoof,
+        faCircleExclamation,
+        faTriangleExclamation,
+        faShieldAlt,
+        faEye,
+        faHandshake,
+        faSnowplow,
+        faWheatAwn
     );
 }

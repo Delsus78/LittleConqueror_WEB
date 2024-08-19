@@ -1,5 +1,3 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { VueQueryPlugin } from '@tanstack/vue-query'
@@ -9,6 +7,13 @@ import {importIcons} from "./iconsImports.js";
 
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {updateGlobalOptions} from "vue3-toastify";
+
+import "bootstrap/dist/css/bootstrap.min.css"
+import "./assets/main.css"
+import "./assets/scss/styles.scss"
+import * as bootstrap from 'bootstrap';
+window.bootstrap = bootstrap;
+
 
 updateGlobalOptions({
     position: 'top-right',

@@ -10,7 +10,7 @@
   </div>
 </template>
 <script setup>
-import ResourceIcon from "@/components/ResourceIcon.vue";
+import ResourceIcon from "@/components/icons/ResourceIcon.vue";
 
 const { resourceKey, resource } = defineProps({
   resourceKey: {
