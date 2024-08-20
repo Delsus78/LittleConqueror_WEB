@@ -46,7 +46,7 @@
               </ul>
             </div>
             <div class="col-5">
-              <CityActionPanel/>
+              <CityActionPanel :actionData="cityData.action"/>
             </div>
           </div>
         </div>

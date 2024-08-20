@@ -76,25 +76,25 @@ const onLoginBtnClick = () => {
 <style scoped>
 .background-img {
   position: fixed;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1000;
-    opacity: 0.1;
-    filter: blur(10px);
-    transform: scale(1.1);
-    object-fit: cover;
-    object-position: center;
-    pointer-events: none;
-    user-select: none;
-    touch-action: none;
-    -webkit-user-drag: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -webkit-touch-callout: none;
-    -webkit-tap-highlight-color: transparent;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1000;
+  opacity: 0.1;
+  filter: blur(10px);
+  transform: scale(1.1);
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  user-select: none;
+  touch-action: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 }
 </style>

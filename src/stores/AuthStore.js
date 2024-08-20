@@ -18,7 +18,7 @@ export const useAuthStore = defineStore('auth',() => {
         user.value = await fetchWrapper.post(`${baseUrl}/authenticate`, {username, password})
             .catch(error => {
                 console.error(error);
-                Promise.reject(error);
+                return Promise.reject(error);
             });
 
         // store user details and jwt in local storage to keep user logged in between page refreshes

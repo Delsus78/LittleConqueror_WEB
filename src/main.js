@@ -9,8 +9,8 @@ import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {updateGlobalOptions} from "vue3-toastify";
 
 import "bootstrap/dist/css/bootstrap.min.css"
-import "./assets/main.css"
 import "./assets/scss/styles.scss"
+import "./assets/main.css"
 import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
 

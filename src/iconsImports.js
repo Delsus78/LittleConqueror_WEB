@@ -5,9 +5,9 @@ import {
     faCoins, faEye,
     faGasPump,
     faGem, faHandshake,
-    faMapMarkedAlt,
+    faMapMarkedAlt, faMicrochip,
     faMountain,
-    faPeopleRoof, faShieldAlt,
+    faPeopleRoof, faQuestion, faShieldAlt,
     faSignOutAlt, faSnowplow,
     faTasks,
     faTree, faTriangleExclamation,
@@ -37,6 +37,8 @@ export function importIcons() {
         faEye,
         faHandshake,
         faSnowplow,
-        faWheatAwn
+        faWheatAwn,
+        faMicrochip,
+        faQuestion
     );
 }

@@ -19,18 +19,22 @@ const { actionName, size } = defineProps({
 });
 
 const icon = computed(() => {
-  switch (actionName)
+  switch (actionName.toLowerCase())
   {
-    case 'military':
+    case 'militaire':
       return 'shield-alt';
-    case 'spy':
+    case 'espionnage':
       return 'eye';
-    case 'diplomacy':
+    case 'diplomatique':
       return 'handshake';
-    case 'harvest':
+    case 'agricole':
       return 'wheat-awn';
-    case 'mine':
+    case 'miniere':
       return 'snowplow';
+    case 'technologique':
+      return 'microchip';
+    case 'rien':
+      return 'question';
   }
 });
 
