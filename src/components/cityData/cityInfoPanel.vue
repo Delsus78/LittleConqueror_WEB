@@ -7,7 +7,9 @@
               :data-bs-target="'#yourcities-collapse' + cityData.osmType + cityData.id"
               aria-expanded="true"
               :aria-controls="'yourcities-collapse' + cityData.osmType + cityData.id">
-        <strong>{{ cityData.name }}</strong>
+        <strong data-bs-toggle="tooltip"
+                data-bs-placement="left"
+                :data-bs-title="'City ID : ' + cityData.osmType + cityData.id">{{ cityData.name }}</strong>
       </button>
     </h2>
     <div :id="'yourcities-collapse' + cityData.osmType + cityData.id"
