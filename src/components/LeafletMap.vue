@@ -24,7 +24,13 @@ onMounted(() => {
 });
 
 watch(store.$state, (state) => {
-  displayGeoJsonDataOnMap(state.polygonsDisplayed);
+  if (state.polygonsDisplayed)
+    displayGeoJsonDataOnMap(state.polygonsDisplayed);
+
+  if (state.geoJsonLayer) {
+    displayGeoJsonLayerOnMap(state.geoJsonLayer);
+  }
+
 },{ deep: true });
 
 function displayGeoJsonDataOnMap(geoJsonDataMap) {
@@ -41,6 +47,13 @@ function displayGeoJsonDataOnMap(geoJsonDataMap) {
     const bounds = polygon.getBounds();
     map.value.flyToBounds(bounds);
   });
+}
+
+function displayGeoJsonLayerOnMap(geoJsonLayer) {
+  const layerGeojson = L.geoJSON(geoJsonLayer.geojson, { style: geoJsonLayer.styleFunc }).addTo(map.value);
+
+  const bounds = layerGeojson.getBounds();
+  map.value.flyToBounds(bounds);
 }
 
 </script>

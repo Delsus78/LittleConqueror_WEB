@@ -13,13 +13,11 @@
       </div>
     </div>
     <div class="row">
-      <!-- Left column (Main content) -->
       <div class="col-md-4">
         <div class="shadow-lg mb-3 rounded" style="height: 30vh;">
           <leaflet-map />
         </div>
       </div>
-      <!-- Right column (Sidebar with boxes, a title and a scrollable capacity) -->
       <div class="col-md-8">
         <div class="shadow-lg overflow-y-scroll rounded" style="height: 60vh;">
           <!-- Sidebar content goes here -->
@@ -46,7 +44,7 @@ const leafletMapStore = useLeafletMapStore();
 const citiesStore = useCitiesStore();
 
 const { createPolygonFromCity, removePolygons } = leafletMapStore;
-const { fetchUserTerritory } = citiesStore;
+const { fetchUserTerritory, fetchCityDataByOsmId } = citiesStore;
 
 const territoryData = await fetchUserTerritory();
 
@@ -65,11 +63,11 @@ const onModifyCityAction = (cityId) => {
   console.log('Modify city action', cityId);
 }
 
-const onShowCityOnMap = (city) => {
-  console.log('Show city on map', city);
+async function onShowCityOnMap(city) {
+  const cityData = await fetchCityDataByOsmId(city.id, city.osmType);
 
   removePolygons();
-  createPolygonFromCity(city, {
+  createPolygonFromCity(cityData, {
     style: () => ({color: 'green'})
   });
 }

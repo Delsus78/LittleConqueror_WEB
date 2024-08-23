@@ -17,5 +17,27 @@ export const useCitiesStore = defineStore('cities', () => {
         return response;
     }
 
-    return { fetchUserTerritory }
+    async function fetchCityDataByOsmId(osmId, osmType) {
+        const response = await fetchWrapper.get(`${baseUrl}/Cities/ByOsmId?osmId=${osmId}&osmType=${osmType}`)
+            .catch(error => {
+                console.error(error);
+                Promise.reject(error);
+            });
+
+        return response;
+    }
+
+    async function fetchUserCitiesFeatureCollection() {
+        const { userId } = storeToRefs(useAuthStore());
+
+        const response = await fetchWrapper.get(`${baseUrl}/users/${userId.value}/Territory/Cities`)
+            .catch(error => {
+                console.error(error);
+                Promise.reject(error);
+            });
+
+        return response;
+    }
+
+    return { fetchUserTerritory, fetchCityDataByOsmId, fetchUserCitiesFeatureCollection }
 })

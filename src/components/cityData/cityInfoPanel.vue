@@ -20,10 +20,7 @@
                   @click="emit('show-city-on-map', cityData)">
             <font-awesome-icon icon="map-marked-alt"/> Afficher sur la carte
           </button>
-          <button type="button" class="btn btn-outline-primary"
-                  @click="emit('modify-city-action', cityData.id)">
-            <font-awesome-icon icon="circle-exclamation"/> Modifier l'action
-          </button>
+          <set-action-to-city-modal/>
           <button type="button" class="btn btn-outline-danger"
                   @click="emit('abandon-city', cityData.id)">
             <font-awesome-icon icon="triangle-exclamation"/> Abandonner
@@ -31,7 +28,7 @@
         </div>
         <div class="container">
           <div class="row justify-content-around">
-            <div class="col-6">
+            <div class="col-md-6 mb-1">
               <ul class="list-group">
                 <li class="list-group-item row">
                   <h5 class="col-4 card-title">Population</h5>
@@ -47,7 +44,7 @@
                 </li>
               </ul>
             </div>
-            <div class="col-5">
+            <div class="col-md-5">
               <CityActionPanel :actionData="cityData.action"/>
             </div>
           </div>
@@ -60,6 +57,7 @@
 
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import CityActionPanel from "@/components/cityData/CityActionPanel.vue";
+import SetActionToCityModal from "@/components/modals/SetActionToCityModal.vue";
 
 const emit = defineEmits(["abandon-city", "modify-city-action", "show-city-on-map"]);
 
@@ -73,10 +71,7 @@ const { cityData } = defineProps({
       "name": "string",
       "population": 0,
       "latitude": 0,
-      "longitude": 0,
-      "geojson": [
-        "string"
-      ]
+      "longitude": 0
     }
   }
 });
