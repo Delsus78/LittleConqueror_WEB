@@ -20,6 +20,7 @@ export const  useLeafletMapStore
 
     function removePolygons() {
         polygonsDisplayed.value = {};
+        geoJsonLayer.value = {};
     }
 
     function setGeoJsonLayer(geojson, styleFunc) {
