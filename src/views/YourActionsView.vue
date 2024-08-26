@@ -1,53 +1,43 @@
 <template>
   <div class="container">
-    <div class="accordion-flush bg-light-subtle" id="accordionExample">
-      <div class="accordion-item card">
-        <h2 class="accordion-header card-header" id="headingOne">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            Accordion Item #1
-          </button>
-        </h2>
-        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-          </div>
-        </div>
-      </div>
-      <div class="accordion-item card">
-        <h2 class="accordion-header card-header" id="headingTwo">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            Accordion Item #2
-          </button>
-        </h2>
-        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-          </div>
-        </div>
-      </div>
-      <div class="accordion-item card">
-        <h2 class="accordion-header card-header" id="headingThree">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-            Accordion Item #3
-          </button>
-        </h2>
-        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-          </div>
-        </div>
-      </div>
+    <div class="row row-cols-1 row-cols-md-auto row-cols-lg-5 gap-3" :key="actualPage" style="height: 70vh;">
+      <CityActionPanel class="col" style="height: 30vh;"
+                       v-for="actionCityPair in actualActionListToDisplay"
+                       :key="actionCityPair.action.id"
+                       :action-data="actionCityPair.action" with-city-data
+                       :city-data="actionCityPair.city"/>
     </div>
+    <Pagination :max-page="maxPages" :actual-page="actualPage" @page-change="onPaginationChange"/>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import Pagination from "@/components/utilities/Pagination.vue";
+import { useActionStore } from "@/stores/index.js";
+import {storeToRefs} from "pinia";
+import {computed, ref} from "vue";
+import {YourActionsStore} from "@/stores/PagesStores/YourActionsStore.js";
+import CityActionPanel from "@/components/cityData/CityActionPanel.vue";
+const actionStore = useActionStore();
+const pageStore = YourActionsStore();
 
-const isCollapsed = ref(false);
+await actionStore.getActionPaginationList(1, 10);
 
-function toggleCollapse() {
-  isCollapsed.value = !isCollapsed.value;
+const { totalActions } = storeToRefs(actionStore);
+const { actualPage } = storeToRefs(pageStore);
+const actualActionListToDisplay = ref(actionStore.getActionListToDisplay(actualPage.value));
+
+const maxPages = computed(() => {
+  console.log(totalActions.value);
+  return Math.ceil(totalActions.value / 10);
+});
+
+async function onPaginationChange(pageNumber) {
+  console.log(pageNumber);
+  actualPage.value = pageNumber;
+
+  await actionStore.getActionPaginationList(pageNumber, 10);
+  actualActionListToDisplay.value = actionStore.getActionListToDisplay(pageNumber);
 }
 </script>
 <style scoped>
