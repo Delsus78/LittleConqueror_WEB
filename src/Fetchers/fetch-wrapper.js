@@ -1,4 +1,6 @@
 import {useAuthStore} from '@/stores';
+import {storeToRefs} from "pinia";
+import {useRoute} from "vue-router";
 
 export const fetchWrapper = {
     get: request('GET'),
@@ -40,10 +42,15 @@ async function handleResponse(response) {
         const data = text && JSON.parse(text);
         
         if (!response.ok) {
-            const { user, logout } = useAuthStore();
+            const authStore = useAuthStore();
+            const route=useRoute();
+
+            const { user } = storeToRefs(authStore);
+
             if ([401, 403].includes(response.status) && user) {
                 // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
-                await logout();
+                await authStore.setReturnUrl(route.path);
+                await authStore.logout();
             }
 
             let error = (data && data.error) || text;

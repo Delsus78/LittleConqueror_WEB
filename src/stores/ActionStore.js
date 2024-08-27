@@ -15,7 +15,7 @@ export const useActionStore = defineStore('actions', () => {
         const response = await fetchWrapper.post(`${baseUrl}/Cities/setAction`, {cityId, actionType})
             .catch(error => {
                 console.error(error);
-                Promise.reject(error);
+                return Promise.reject(error);
             });
 
         return response;
@@ -30,7 +30,7 @@ export const useActionStore = defineStore('actions', () => {
              const response = await fetchWrapper.get(`${baseUrl}/Actions?page=${pageIndex}&pageSize=${pageSize}`)
                 .catch(error => {
                     console.error(error);
-                    Promise.reject(error);
+                    return Promise.reject(error);
                 });
 
             userActionsList.value[pageIndex] = response.actions;

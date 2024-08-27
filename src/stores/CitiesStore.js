@@ -2,6 +2,7 @@ import {defineStore, storeToRefs} from 'pinia'
 import {useAuthStore} from "@/stores/AuthStore.js";
 import {fetchWrapper} from "@/Fetchers/fetch-wrapper.js";
 import {ref} from "vue";
+import {toast} from "vue3-toastify";
 
 const baseUrl = `${import.meta.env.VITE_API_URL}`;
 
@@ -16,7 +17,7 @@ export const useCitiesStore = defineStore('cities', () => {
             userTerritory.value = await fetchWrapper.get(`${baseUrl}/Users/${userId.value}/Territory`)
                 .catch(error => {
                     console.error(error);
-                    Promise.reject(error);
+                    return Promise.reject(error);
                 });
         }
 
@@ -28,7 +29,7 @@ export const useCitiesStore = defineStore('cities', () => {
             cityDataByOsmId.value[osmId] = await fetchWrapper.get(`${baseUrl}/Cities/ByOsmId?osmId=${osmId}&osmType=${osmType}`)
                 .catch(error => {
                     console.error(error);
-                    Promise.reject(error);
+                    return Promise.reject(error);
                 });
         }
 
@@ -42,12 +43,20 @@ export const useCitiesStore = defineStore('cities', () => {
             userCitiesFeatureCollection.value = await fetchWrapper.get(`${baseUrl}/users/${userId.value}/Territory/Cities`)
                 .catch(error => {
                     console.error(error);
-                    Promise.reject(error);
+                    return Promise.reject(error);
                 });
         }
 
         return userCitiesFeatureCollection.value;
     }
 
-    return { fetchUserTerritory, fetchCityDataByOsmId, fetchUserCitiesFeatureCollection }
+    async function fetchCityByLonLat(lon, lat) {
+        return await fetchWrapper.get(`${baseUrl}/Cities/ByLonLat?Latitude=${lat}&Longitude=${lon}`)
+            .catch(error => {
+                console.error(error);
+                return Promise.reject(error);
+            });
+    }
+
+    return { fetchUserTerritory, fetchCityDataByOsmId, fetchUserCitiesFeatureCollection, fetchCityByLonLat }
 })

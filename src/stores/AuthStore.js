@@ -39,7 +39,7 @@ export const useAuthStore = defineStore('auth',() => {
         await fetchWrapper.post(`${baseUrl}/registration`, { username, password, validRegistrationLink })
             .catch(error => {
                 console.error(error);
-                Promise.reject(error);
+                return Promise.reject(error);
             });
 
         await login(username, password);
@@ -48,7 +48,7 @@ export const useAuthStore = defineStore('auth',() => {
         await fetchWrapper.post(`${baseUrl}/authenticate/changePassword`, { password, validForgetPasswordLink })
             .catch(error => {
                 console.error(error);
-                Promise.reject(error);
+                return Promise.reject(error);
             });
 
         await router.push('/login');
@@ -61,6 +61,9 @@ export const useAuthStore = defineStore('auth',() => {
 
         await router.push('/login');
     }
+    async function setReturnUrl(url) {
+        returnUrl.value = url;
+    }
 
-    return { user, login, logout, isAuthenticated, userId, register, changePassword }
+    return { user, login, logout, isAuthenticated, userId, register, changePassword, setReturnUrl }
 });

@@ -11,7 +11,7 @@ export const useUserDataStore = defineStore('user',() => {
         const response = await fetchWrapper.get(`${baseUrl}/Users/${userId.value}/Informations?IncludeTerritory=${includeTerritory}&IncludeResources=${includeResources}`)
             .catch(error => {
                 console.error(error);
-                Promise.reject(error);
+                return Promise.reject(error);
             });
 
         return response;

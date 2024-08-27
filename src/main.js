@@ -7,6 +7,7 @@ import {importIcons} from "./iconsImports.js";
 
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {updateGlobalOptions} from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./assets/scss/styles.scss"
