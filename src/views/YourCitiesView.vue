@@ -1,5 +1,5 @@
 <template>
-  <div class="container p-10">
+  <div class="container">
     <div class="row">
       <div class="col-12 text-white border-bottom mb-3 shadow-lg">
         <div class="row">
@@ -65,9 +65,6 @@ async function onModifyCityAction(cityId, newActionType) {
 
 async function onShowCityOnMap(city) {
   const cityData = await citiesStore.fetchCityDataByOsmId(city.id, city.osmType);
-
-  console.log('Show city on map', cityData)
-
   leafletMapStore.removePolygons();
   leafletMapStore.createPolygonFromCity(cityData, {
     style: () => ({color: 'green'})

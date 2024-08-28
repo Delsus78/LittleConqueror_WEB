@@ -13,6 +13,7 @@ import LeafletMap from "@/components/LeafletMap.vue";
 import {onMounted} from "vue";
 import {useCitiesStore} from "@/stores/index.js";
 import {useLeafletMapStore} from "@/stores/index.js";
+import {toast} from "vue3-toastify";
 
 const citiesStore = useCitiesStore();
 const leafletMapStore = useLeafletMapStore();
@@ -49,9 +50,33 @@ onMounted( async () => {
   leafletMapStore.setGeoJsonLayer(featureCollection, style);
 })
 
-const onMapClick = (event) => {
-  console.log(event);
+const onMapClick = async (event) => {
+  if (leafletMapStore.getIsLoading) {
+    toast.error('Veuillez patienter, une action est en cours');
+    return;
+  }
+
+  leafletMapStore.setLoading(true);
+  const cityFound = await citiesStore.fetchCityByLonLat(event.latlng.lng, event.latlng.lat)
+      .catch((error) => {
+        toast.error('Oups, cette ville ne semble pas exister');
+      });
+  leafletMapStore.setLoading(false);
+
+  if (cityFound == null) return;
+
+  leafletMapStore.removePolygons();
+  leafletMapStore.createPolygonFromCity(cityFound, { style:
+    {
+      fillColor: '#FFEDA0',
+      weight: 2,
+      opacity: 1,
+      color: 'gray',
+      fillOpacity: 0.7
+    }
+  });
 };
+
 </script>
 <style scoped>
 

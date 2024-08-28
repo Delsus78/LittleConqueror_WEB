@@ -14,7 +14,6 @@
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@popperjs/core": "^2.11.8",
     "@tanstack/vue-query": "^5.51.21",
-    "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "bootstrap-vue": "^2.23.1",
     "gsap": "^3.12.5",

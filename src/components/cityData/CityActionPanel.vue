@@ -11,22 +11,32 @@
       <h5 v-else class="card-title text-center">Ville {{ action.actionType }}</h5>
 
       <div class="container" v-if="action.actionType === 'Agricole'">
-        <text-with-resource-icon text-color="text-bg-success" resource-name="food">
+        <text-with-resource-icon additionalCss="text-bg-success bg-success" resource-name="food">
           <div class="col position-relative">
             + {{action.foodProduction}}
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              {{action.agriculturalFertility}}<span class="visually-hidden">New alerts</span>
+              x {{action.agriculturalFertility}}<span class="visually-hidden">x {{action.agriculturalFertility}}</span>
             </span>
           </div>
         </text-with-resource-icon>
       </div>
 
       <div class="container" v-else-if="action.actionType === 'Miniere'">
-        <text-with-resource-icon text-color="text-bg-success" :resource-name="action.resourceType.toLowerCase()">
+        <text-with-resource-icon additionalCss="text-bg-success bg-success" :resource-name="action.resourceType.toLowerCase()">
           <div class="col position-relative">
-            + 1
+            + TODO
           </div>
         </text-with-resource-icon>
+      </div>
+    </div>
+    <div v-if="withCityData" class="card-footer bg-primary-subtle text-muted ">
+      <div class="row align-items-center">
+        <div class="col">
+          <span class="fs-5"> {{cityData.name}}</span>
+        </div>
+        <div class="col text-end">
+          <span> {{cityData.population}}</span>
+        </div>
       </div>
     </div>
   </div>
