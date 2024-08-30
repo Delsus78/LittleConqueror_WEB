@@ -13,11 +13,11 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 mb-5">
+      <div class="col-md-3 mb-5">
         <statistic-item class="mb-3" :value="userData.totalPopulation" icon="people-roof" name="Population"/>
         <statistic-item :value="userData.totalCities" icon="city" name="Villes"/>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-9">
         <UserResources :userResources="userData.resources"/>
       </div>
     </div>

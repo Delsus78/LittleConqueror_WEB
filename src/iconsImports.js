@@ -1,15 +1,16 @@
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {
+    faAngleDown,
     faArrowDown,
-    faArrowLeft, faArrowRight, faArrowUp,
+    faArrowLeft, faArrowRight, faArrowUp, faCheck,
     faCircleExclamation,
     faCity,
     faCoins, faEye,
     faGasPump,
     faGem, faHandshake,
-    faMapMarkedAlt, faMicrochip,
+    faMapMarkedAlt, faMicrochip, faMinus,
     faMountain,
-    faPeopleRoof, faQuestion, faShieldAlt,
+    faPeopleRoof, faPlus, faQuestion, faShieldAlt,
     faSignOutAlt, faSnowplow,
     faTasks,
     faTree, faTriangleExclamation,
@@ -45,6 +46,10 @@ export function importIcons() {
         faArrowRight,
         faArrowLeft,
         faArrowDown,
-        faArrowUp
+        faArrowUp,
+        faPlus,
+        faMinus,
+        faCheck,
+        faAngleDown
     );
 }
