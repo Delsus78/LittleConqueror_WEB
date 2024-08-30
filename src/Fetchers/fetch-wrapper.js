@@ -19,7 +19,15 @@ function request(method) {
             requestOptions.headers['Content-Type'] = 'application/json';
             requestOptions.body = JSON.stringify(body);
         }
-        return await fetch(url, requestOptions).then(handleResponse);
+        return await fetch(url, requestOptions)
+            .then(async response => {
+                // Traiter les statuts 401, 403, etc. dans handleResponse
+                return handleResponse(response);
+            })
+            .catch(error => {
+                console.error('Request failed:', error);
+                throw error;
+            });
     }
 }
 
