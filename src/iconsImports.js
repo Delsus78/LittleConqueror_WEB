@@ -10,7 +10,7 @@ import {
     faGem, faHandshake,
     faMapMarkedAlt, faMicrochip, faMinus,
     faMountain,
-    faPeopleRoof, faPlus, faQuestion, faShieldAlt,
+    faPeopleRoof, faPlus, faQuestion, faSeedling, faShieldAlt,
     faSignOutAlt, faSnowplow,
     faTasks,
     faTree, faTriangleExclamation,
@@ -50,6 +50,7 @@ export function importIcons() {
         faPlus,
         faMinus,
         faCheck,
-        faAngleDown
+        faAngleDown,
+        faSeedling
     );
 }
