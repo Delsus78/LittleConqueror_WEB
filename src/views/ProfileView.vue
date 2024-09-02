@@ -18,7 +18,7 @@
         <statistic-item :value="userData.totalCities" icon="city" name="Villes"/>
       </div>
       <div class="col-md-9">
-        <UserResources :userResources="userData.resources"/>
+        <UserResources :userResources="userResourcesFiltered"/>
       </div>
     </div>
   </div>
@@ -27,7 +27,7 @@
 import { useUserDataStore} from "@/stores/index.js";
 import UserResources from "@/components/userData/UserResources.vue";
 import StatisticItem from "@/components/utilities/StatisticItem.vue";
-import {onMounted} from "vue";
+import {computed, onMounted} from "vue";
 
 const { fetchUserInformations } = useUserDataStore();
 
@@ -39,6 +39,16 @@ onMounted(
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     }
 )
+
+const userResourcesFiltered = computed(() => {
+  return Object.fromEntries(Object.entries(userData.resources)
+      .filter(([key, value]) => key !== 'researchPoints'));
+});
+
+const reserachPoints = computed(() => {
+  return userData.resources.researchPoints;
+});
+
 </script>
 <style scoped>
 
