@@ -2,36 +2,40 @@
   <div class="container">
     <div class="row">
       <div class="col-12 text-white border-bottom mb-3 shadow-lg">
-        <div class="row">
-          <h1 class="col-12 position-relative"
+        <div class="d-flex justify-content-between">
+          <h1 class="mb-0"
               data-bs-toggle="tooltip"
               data-bs-placement="left"
-              :data-bs-title="'User ID : ' + userData.id">
-            {{ userData.name }}
+              :data-bs-title="'User ID : ' + userData.userId">
+            {{ userData.username }}
           </h1>
+          <div class="nav nav-tabs">
+            <button @click="userPageIndex = 0" :class="{'active': userPageIndex === 0}" class="nav-link fw-bold fs-4">
+              Ressources
+            </button>
+            <button @click="userPageIndex = 1" :class="{'active': userPageIndex === 1}" class="nav-link fw-bold fs-4">
+              Technologies
+            </button>
+
+          </div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-3 mb-5">
-        <statistic-item class="mb-3" :value="userData.totalPopulation" icon="people-roof" name="Population"/>
-        <statistic-item :value="userData.totalCities" icon="city" name="Villes"/>
-      </div>
-      <div class="col-md-9">
-        <UserResources :userResources="userResourcesFiltered"/>
-      </div>
+    <div v-if="userPageIndex === 0">
+      <user-resources-page/>
     </div>
   </div>
 </template>
 <script setup>
-import { useUserDataStore} from "@/stores/index.js";
-import UserResources from "@/components/userData/UserResources.vue";
-import StatisticItem from "@/components/utilities/StatisticItem.vue";
-import {computed, onMounted} from "vue";
+import {onMounted, ref} from "vue";
+import UserResourcesPage from "@/components/profilePages/UserResourcesPage.vue";
+import {useAuthStore} from "@/stores/index.js";
+import {storeToRefs} from "pinia";
 
-const { fetchUserInformations } = useUserDataStore();
+const { user } = storeToRefs(useAuthStore());
+const userData = user.value.authUser;
 
-const userData = await fetchUserInformations();
+const userPageIndex = ref(0);
 
 onMounted(
     () => {
@@ -39,15 +43,6 @@ onMounted(
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     }
 )
-
-const userResourcesFiltered = computed(() => {
-  return Object.fromEntries(Object.entries(userData.resources)
-      .filter(([key, value]) => key !== 'researchPoints'));
-});
-
-const reserachPoints = computed(() => {
-  return userData.resources.researchPoints;
-});
 
 </script>
 <style scoped>
