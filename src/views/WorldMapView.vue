@@ -95,7 +95,7 @@ const onMapClick = async (event) => {
       weight: 2,
       opacity: 1,
       color: 'gray',
-      fillOpacity: 0.7
+      fillOpacity: 0.3
     }
   });
 

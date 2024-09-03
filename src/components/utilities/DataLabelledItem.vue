@@ -25,7 +25,7 @@ const { label, value, icon, iconBgColor } = defineProps({
     required: true
   },
   value: {
-    type: String,
+    type: Number,
     required: true
   },
   icon: {
