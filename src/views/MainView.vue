@@ -1,5 +1,5 @@
 <template>
-  <NavBar v-if="isAuthenticated"/>
+  <NavBar v-if="store.isAuthenticated"/>
   <router-view v-slot="{ Component }">
     <suspense timeout="0">
       <template #default>
@@ -13,7 +13,7 @@
     </suspense>
   </router-view>
   <ErrorView v-if="isErrorOccured" :error="errorMessage"/>
-  <tanks-back-ground v-if="isAuthenticated" />
+  <tanks-back-ground v-if="store.isAuthenticated"/>
 </template>
 <script setup>
 import {RouterView} from 'vue-router'
@@ -21,11 +21,10 @@ import NavBar from "@/components/NavBar.vue";
 import TanksBackGround from "@/components/TanksBackGround.vue";
 
 import { useAuthStore } from '@/stores';
-import {storeToRefs} from "pinia";
 import LoadingView from "@/views/LoadingView.vue";
 import {onErrorCaptured, ref} from "vue";
 import ErrorView from "@/views/ErrorView.vue";
-const { isAuthenticated } = storeToRefs(useAuthStore());
+const store = useAuthStore();
 const isErrorOccured = ref(false);
 const errorMessage = ref('');
 

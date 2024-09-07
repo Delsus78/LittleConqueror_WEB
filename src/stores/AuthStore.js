@@ -10,7 +10,7 @@ export const useAuthStore = defineStore('auth',() => {
     const user = ref(JSON.parse(localStorage.getItem('user')));
     const returnUrl = ref(null);
 
-    const isAuthenticated = computed(() => user.value !== null && user.value !== undefined);
+    const isAuthenticated = computed(() => user.value !== null);
     const userId = computed(() => user.value.authUser.userId);
 
     async function login(username, password) {
@@ -55,6 +55,7 @@ export const useAuthStore = defineStore('auth',() => {
     }
 
     async function logout() {
+        console.log('logout ...')
         user.value = null;
 
         localStorage.removeItem('user');
