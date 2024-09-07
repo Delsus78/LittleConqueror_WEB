@@ -143,6 +143,19 @@ function particles() {
 
 }
 
+function shootMissile() {
+  const speed = 5;
+  const vx = Math.cos(lastRadRotationOfTheCanon.value) * speed;
+  const vy = Math.sin(lastRadRotationOfTheCanon.value) * speed;
+
+  missiles.value.push({
+    x: tankBallCenterX,
+    y: tankBallCenterY,
+    vx,
+    vy
+  });
+}
+
 onMounted(() => {
   canvas = document.getElementById('backgroundCanvas');
   ctx = canvas.getContext('2d');
@@ -159,19 +172,6 @@ onMounted(() => {
     tankCanon.style.transform = `translateX(-50%) rotate(${angleInDegrees}deg)`;
 
     return angleInRadians;
-  }
-
-  function shootMissile() {
-    const speed = 5;
-    const vx = Math.cos(lastRadRotationOfTheCanon.value) * speed;
-    const vy = Math.sin(lastRadRotationOfTheCanon.value) * speed;
-
-    missiles.value.push({
-      x: tankBallCenterX,
-      y: tankBallCenterY,
-      vx,
-      vy
-    });
   }
 
   function updateMissiles() {
@@ -228,6 +228,7 @@ onMounted(() => {
   });
 
   function bgLoop() {
+    if (canvas == null || ctx == null) return;
     requestAnimationFrame(bgLoop);
     draw();
     particles();
@@ -240,6 +241,9 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('resize', resizeCanvas);
   document.removeEventListener('mousemove', updateCursorPosition);
+  clearInterval(shootMissile);
+
+  canvas = null;
 });
 </script>
 <style scoped>
