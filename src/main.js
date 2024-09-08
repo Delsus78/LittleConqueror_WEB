@@ -13,6 +13,9 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "./assets/scss/styles.scss"
 import "./assets/main.css"
 import * as bootstrap from 'bootstrap';
+import VNetworkGraph from "v-network-graph"
+import "v-network-graph/lib/style.css"
+
 window.bootstrap = bootstrap;
 
 
@@ -28,6 +31,7 @@ updateGlobalOptions({
 importIcons();
 
 createApp(App)
+    .use(VNetworkGraph)
     .use(VueQueryPlugin)
     .use(createPinia())
     .component('font-awesome-icon', FontAwesomeIcon)
