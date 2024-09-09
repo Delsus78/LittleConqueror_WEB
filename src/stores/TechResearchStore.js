@@ -6,30 +6,6 @@ const baseUrl = `${import.meta.env.VITE_API_URL}`;
 
 export const useTechResearchStore = defineStore('tech-research',() => {
 
-    /***
-     {
-     "researchType": "Rendement_Scientifique_III",
-     "researchCategory": "EngineeringResearch",
-     "name": "Rendement Scientifique III",
-     "description": "Cette amélioration permet d'augmenter la production de ressources scientifiques.",
-     "cost": 0,
-     "prerequisites": [
-     "Rendement_Scientifique_II"
-     ],
-     "researchStatus": "Undiscovered"
-     },
-     {
-     "researchType": "Rendement_Scientifique_IV",
-     "researchCategory": "EngineeringResearch",
-     "name": "Rendement Scientifique IV",
-     "description": "Cette amélioration permet d'augmenter la production de ressources scientifiques.",
-     "cost": 0,
-     "prerequisites": [
-     "Rendement_Scientifique_III"
-     ],
-     "researchStatus": "Undiscovered"
-     },
-     */
     async function fetchTechResearches() {
         const { userId } = storeToRefs(useAuthStore());
 
