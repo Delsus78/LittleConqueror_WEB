@@ -5,7 +5,8 @@
       :nodes="data.nodes"
       :edges="data.edges"
       :layouts="layouts"
-      :configs="configs">
+      :configs="configs"
+      :event-handlers="eventHandlers">
     <!-- Replace the node component :fill="data.nodes[nodeId].researchStatus === 'Undiscovered' ? config.colorOnUndiscovered : config.color" -->
     <template #override-node="{ nodeId, scale, config, ...slotProps }">
       <rect :x="-config.width / 2"
@@ -80,10 +81,11 @@ const researchData = await store.fetchTechResearches();
 const nodeSize = 45;
 const data = store.transformTechResearchesToVNetworkGraph(researchData);
 const graph = ref();
+const targetNode = "Gribouillis"
 
 const configs = defineConfigs({
   view: {
-    autoPanAndZoomOnLoad: "fit-content",
+    autoPanAndZoomOnLoad: false,
     onBeforeInitialDisplay: () => layout("LR"),
   },
   node: {
@@ -137,6 +139,18 @@ const layouts = reactive({
   nodes: {},
 })
 
+const eventHandlers = {
+  "view:load": () => {
+    if (!graph.value) return
+    // Pan the target node position to the center.
+    const sizes = graph.value.getSizes()
+    graph.value.panTo({
+      x: sizes.width / 2 - layouts.nodes[targetNode].x,
+      y: sizes.height / 2 - layouts.nodes[targetNode].y,
+    })
+  },
+}
+
 function layout(direction) {
   if (Object.keys(data.nodes).length <= 1 || Object.keys(data.edges).length == 0) {
     return
@@ -148,7 +162,6 @@ function layout(direction) {
   // Set an object for the graph label
   g.setGraph({
     rankdir: direction,
-    align: "UR",
     nodesep: nodeSize,
     edgesep: nodeSize,
     ranksep: nodeSize,
