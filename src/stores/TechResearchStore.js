@@ -19,7 +19,15 @@ export const useTechResearchStore = defineStore('tech-research',() => {
     }
 
     function transformTechResearchesToVNetworkGraph(techResearches) {
-        const nodes = {};
+        const nodes = {
+            "Root": {
+                name: "Root",
+                description: "Root",
+                cost: 0,
+                category: "root",
+                researchStatus: "root"
+            }
+        };
         const edges = {};
         let edgeId = 0;
 
@@ -29,16 +37,32 @@ export const useTechResearchStore = defineStore('tech-research',() => {
                 description: techResearch.description,
                 cost: techResearch.cost,
                 category: techResearch.researchCategory,
-                researchStatus: techResearch.researchStatus
+                researchStatus: techResearch.researchType === "Gribouillis" ? "Researched" : techResearch.researchStatus
             };
 
-            techResearch.prerequisites.forEach(prerequisite => {
+            if (techResearch.prerequisites.length === 0) {
                 edges["edge"+edgeId] = {
-                    source: prerequisite,
+                    source: "Root",
                     target: techResearch.researchType
                 };
                 edgeId++;
-            });
+            } else {
+                nodes[techResearch.researchType].prerequisitesData = techResearch.prerequisites.map(prerequisite => {
+                    return {
+                        name: techResearches.find(techResearch => techResearch.researchType === prerequisite).name,
+                        researchType: prerequisite,
+                        researchStatus: techResearches.find(techResearch => techResearch.researchType === prerequisite).researchStatus,
+                        category: techResearches.find(techResearch => techResearch.researchType === prerequisite).researchCategory
+                    };
+                });
+                techResearch.prerequisites.forEach(prerequisite => {
+                    edges["edge"+edgeId] = {
+                        source: prerequisite,
+                        target: techResearch.researchType
+                    };
+                    edgeId++;
+                });
+            }
         });
 
         return { nodes, edges };
