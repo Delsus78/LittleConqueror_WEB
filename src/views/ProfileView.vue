@@ -25,7 +25,7 @@
       <user-resources-page/>
     </div>
     <div v-else-if="userPageIndex === 1">
-      <user-tech-tree-page/>
+      <user-tech-trees-page/>
     </div>
   </div>
 </template>
@@ -34,7 +34,7 @@ import {onMounted, ref} from "vue";
 import UserResourcesPage from "@/components/profilePages/UserResourcesPage.vue";
 import {useAuthStore} from "@/stores/index.js";
 import {storeToRefs} from "pinia";
-import UserTechTreePage from "@/components/profilePages/UserTechTreePage.vue";
+import UserTechTreesPage from "@/components/profilePages/UserTechTreesPage.vue";
 
 const { user } = storeToRefs(useAuthStore());
 const userData = user.value.authUser;

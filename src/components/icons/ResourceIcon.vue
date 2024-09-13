@@ -38,7 +38,7 @@ const icon = computed(() => {
     case 'diamond':
       return 'gem';
     case 'petrol':
-      return 'gas-pump';
+      return 'oil-well';
     default:
       return 'question';
   }

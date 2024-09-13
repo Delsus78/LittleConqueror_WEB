@@ -12,7 +12,7 @@
       </div>
       <div class="d-lg-none">
         <CityAsWorldMapPanel class="position-absolute bottom-row start-50 translate-middle z-3 shadow-md h-auto w-100"
-        :city="displayedCity" :key="displayedCity.id"/>
+                             :city="displayedCity" :key="displayedCity.id"/>
       </div>
       <div class="d-none d-lg-block d-xxl-none">
         <CityAsWorldMapPanel class="position-absolute bottom-row start-50 translate-middle z-3 shadow-md h-auto w-50"
@@ -30,6 +30,7 @@ import {useLeafletMapStore} from "@/stores/index.js";
 import {toast} from "vue3-toastify";
 import {storeToRefs} from "pinia";
 import CityAsWorldMapPanel from "@/components/cityData/CityAsWorldMapPanel.vue";
+import {getActionColorCode} from "@/Helpers.js";
 
 const citiesStore = useCitiesStore();
 const leafletMapStore = useLeafletMapStore();
@@ -41,17 +42,7 @@ onMounted( async () => {
   const featureCollection = await citiesStore.fetchUserCitiesFeatureCollection();
 
   const getColor = (action) => {
-    if (action == null) {
-      return '#FFEDA0';
-    }
-
-    return action.actionType === 'Agricole' ? '#29b913' :
-        action.actionType === 'Miniere' ? '#9f9f9f' :
-            action.actionType === 'Militaire' ? '#0029ff' :
-                action.actionType === 'Espionnage' ? '#ff0000' :
-                    action.actionType === 'Diplomatique' ? '#ff00ff' :
-                        action.actionType === 'Technologique' ? '#00ff00' :
-                            action.actionType === 'Rien' ? '#FFEDA0' : '#FFEDA0';
+    return getActionColorCode(action.actionType);
   }
 
   const style = (feature) => {
