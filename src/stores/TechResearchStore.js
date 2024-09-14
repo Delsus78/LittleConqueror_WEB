@@ -18,6 +18,18 @@ export const useTechResearchStore = defineStore('tech-research',() => {
         return response;
     }
 
+    async function fetchSciencePoints() {
+        const { userId } = storeToRefs(useAuthStore());
+
+        const response = await fetchWrapper.get(`${baseUrl}/TechResearches/${userId.value}/SciencePoints`)
+            .catch(error => {
+                console.error(error);
+                return Promise.reject(error);
+            });
+
+        return response;
+    }
+
     function transformTechResearchesToVNetworkGraph(techResearches) {
         const nodes = {
             "Root": {
@@ -68,5 +80,5 @@ export const useTechResearchStore = defineStore('tech-research',() => {
         return { nodes, edges };
     }
 
-    return { fetchTechResearches, transformTechResearchesToVNetworkGraph }
+    return { fetchTechResearches, transformTechResearchesToVNetworkGraph, fetchSciencePoints }
 });

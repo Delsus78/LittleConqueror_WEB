@@ -9,10 +9,9 @@ export const useActionStore = defineStore('actions', () => {
     const userActionsList = ref({});
     const totalActions = ref(null);
 
-    async function postActionChange(cityId, actionType) {
-        const { userId } = storeToRefs(useAuthStore());
+    async function postActionChange(cityId, actionType, params) {
 
-        const response = await fetchWrapper.post(`${baseUrl}/Cities/setAction`, {cityId, actionType})
+        const response = await fetchWrapper.post(`${baseUrl}/Cities/setAction`, {cityId, actionType, ...params})
             .catch(error => {
                 console.error(error);
                 return Promise.reject(error);

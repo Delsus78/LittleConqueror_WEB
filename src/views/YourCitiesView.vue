@@ -27,7 +27,7 @@
                              :cityData="city"
                              class="grid-item"
                              @abandon-city="onAbandonCity"
-                             @modify-city-action="(newActionType) => onModifyCityAction(city.id, newActionType)"
+                             @modify-city-action="(newActionType, params) => onModifyCityAction(city.id, newActionType, params)"
                              @show-city-on-map="onShowCityOnMap"/>
           </div>
         </div>
@@ -58,9 +58,9 @@ const onAbandonCity = (cityId) => {
   console.log('Abandon city', cityId);
 }
 
-async function onModifyCityAction(cityId, newActionType) {
-  console.log('Modify city action', cityId,'to', newActionType);
-  await actionsStore.postActionChange(cityId, newActionType);
+async function onModifyCityAction(cityId, newActionType, params) {
+  console.log('Modify city action', cityId,'to', newActionType, 'with params', params);
+  await actionsStore.postActionChange(cityId, newActionType, params);
 }
 
 async function onShowCityOnMap(city) {

@@ -37,10 +37,25 @@
                 </div>
               </div>
             </div>
+            <div class="container mt-4">
+              <div v-if="newActionType === 'Technologique'">
+                <div class="fs-5 text-center">Catégorie de recherche</div>
+                <div class="input-group align-items-center">
+                  <tech-category-icon class="input-group-text fs-4" size="sm" :category-name="techCategory || 'rien'" :key="techCategory"/>
+                  <select v-model="techCategory" class="form-select fs-5 fw-bold" id="techCategory">
+                    <option value="TheoryResearch">Théorie</option>
+                    <option value="MilitaryResearch">Militaire</option>
+                    <option value="EngineeringResearch">Ingénierie</option>
+                    <option value="GeopoliticResearch">GeoPolitiques</option>
+                  </select>
+                </div>
+              </div>
+            </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" @click="emit('valid-action-change', newActionType)">Valider</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                  @click="emit('valid-action-change', newActionType, {techResearchCategory: techCategory})">Valider</button>
         </div>
       </div>
     </div>
@@ -50,6 +65,7 @@
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {computed, ref} from "vue";
 import ActionIcon from "@/components/icons/ActionIcon.vue";
+import TechCategoryIcon from "@/components/icons/TechCategoryIcon.vue";
 
 const { actualAction } = defineProps({
   actualAction: {
@@ -63,6 +79,9 @@ const emit = defineEmits(['valid-action-change']);
 
 const actualActionName = computed(() => actualAction.actionType || 'rien');
 const newActionType = ref('');
+
+// Technological action
+const techCategory = ref('');
 
 </script>
 <style scoped>

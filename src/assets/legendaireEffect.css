@@ -1,0 +1,95 @@
+.legendaire::before {
+    content:"";
+    background: linear-gradient(45deg,
+    #ff0000 0%,
+    #ff9a00 10%,
+    #d0de21 20%,
+    #4fdc4a 30%,
+    #3fdad8 40%,
+    #2fc9e2 50%,
+    #1c7fee 60%,
+    #5f15f2 70%,
+    #ba0cf8 80%,
+    #fb07d9 90%,
+    #ff0000 100%  )
+    repeat 0% 0% / 300% 100%;
+    position: absolute;
+    inset: -3px;
+    border-radius: 16px;
+    filter: blur(8px) brightness(1.3);
+    transform: translateZ(-1px);
+    animation: rgb 6s linear infinite;
+    opacity: 0.6;
+    z-index: -1;
+}
+
+@keyframes legendaire-color-change {
+    0% { color: #ff0000; }
+    10% { color: #ff9a00; }
+    20% { color: #d0de21; }
+    30% { color: #4fdc4a; }
+    40% { color: #3fdad8; }
+    50% { color: #2fc9e2; }
+    60% { color: #1c7fee; }
+    70% { color: #5f15f2; }
+    80% { color: #ba0cf8; }
+    90% { color: #fb07d9; }
+    100% { color: #ff0000; }
+}
+
+@keyframes rgb {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+@keyframes colorChange {
+    0% {
+        color: #ff0000;
+        filter: drop-shadow(0 0 0.75rem #ff0000);
+    }
+    10% {
+        color: #ff9a00;
+        filter: drop-shadow(0 0 0.75rem #ff9a00);
+    }
+    20% {
+        color: #d0de21;
+        filter: drop-shadow(0 0 0.75rem #d0de21);
+    }
+    30% {
+        color: #4fdc4a;
+        filter: drop-shadow(0 0 0.75rem #4fdc4a);
+    }
+    40% {
+        color: #3fdad8;
+        filter: drop-shadow(0 0 0.75rem #3fdad8);
+    }
+    50% {
+        color: #2fc9e2;
+        filter: drop-shadow(0 0 0.75rem #2fc9e2);
+    }
+    60% {
+        color: #1c7fee;
+        filter: drop-shadow(0 0 0.75rem #1c7fee);
+    }
+    70% {
+        color: #5f15f2;
+        filter: drop-shadow(0 0 0.75rem #5f15f2);
+    }
+    80% {
+        color: #ba0cf8;
+        filter: drop-shadow(0 0 0.75rem #ba0cf8);
+    }
+    90% {
+        color: #fb07d9;
+        filter: drop-shadow(0 0 0.75rem #fb07d9);
+    }
+    100% {
+        color: #ff0000;
+        filter: drop-shadow(0 0 0.75rem #ff0000);
+    }
+}
+
+.colorEffect {
+    animation: colorChange 6s linear infinite;
+}

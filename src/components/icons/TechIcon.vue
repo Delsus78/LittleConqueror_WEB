@@ -18,33 +18,6 @@ const { techId, size } = defineProps({
   }
 });
 
-/*
-// Ingenierie
-    Pierre = 30,
-    Rendement_Minier_I = 31,
-    Rendement_Agricole_I = 32,
-    Fer = 33,
-    Rendement_Minier_II = 34,
-    Rendement_Agricole_II = 35,
-    Routes = 36,
-    Chemins_De_Fer = 37,
-    Or = 38,
-    Electricite = 39,
-    Diamant = 40,
-    Rendement_Minier_III = 41,
-    Rendement_Agricole_III = 42,
-    Petrole = 43,
-    Carburant = 44,
-    Fission_Nucleaire = 45,
-    Fusion_Nucleaire = 46,
-    Tesseract_Energetique = 47,
-    Rendement_Scientifique_I = 48,
-    Rendement_Scientifique_II = 49,
-    Rendement_Scientifique_III = 50,
-    Rendement_Scientifique_IV = 51,
-    Technologies_Futures = 52,
-    Mode_Creatif = 53
- */
 const icon = computed(() => {
   switch (techId.toLowerCase())
   {

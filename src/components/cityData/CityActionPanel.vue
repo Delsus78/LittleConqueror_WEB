@@ -11,22 +11,39 @@
       <h5 v-else class="card-title text-center">Ville {{ action.actionType }}</h5>
 
       <div class="container" v-if="action.actionType === 'Agricole'">
-        <text-with-resource-icon additionalCss="text-bg-success bg-success" resource-name="food">
+        <text-with-info-icon additionalCss="text-bg-success bg-success" icon-name="food" icon-type="resource">
           <div class="col position-relative">
             + {{action.foodProduction}}
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
               x {{action.agriculturalFertility}}<span class="visually-hidden">x {{action.agriculturalFertility}}</span>
             </span>
           </div>
-        </text-with-resource-icon>
+        </text-with-info-icon>
       </div>
 
       <div class="container" v-else-if="action.actionType === 'Miniere'">
-        <text-with-resource-icon additionalCss="text-bg-success bg-success" :resource-name="action.resourceType.toLowerCase()">
+        <text-with-info-icon additionalCss="text-bg-success bg-success" :icon-name="action.resourceType.toLowerCase()" icon-type="resource">
           <div class="col position-relative">
             + TODO
           </div>
-        </text-with-resource-icon>
+        </text-with-info-icon>
+      </div>
+
+      <div class="container" v-if="action.actionType === 'Technologique'">
+        <div class="col position-relative text-center">
+          Recherche <strong>{{ getTechCategoryName(action.techResearchCategory) }}</strong>
+        </div>
+        <text-with-info-icon additional-css=""
+            :style="`background-color: ${getCategoryColorCode(action.techResearchCategory)};`"
+                             :icon-name="action.techResearchCategory"
+                             icon-type="tech-category">
+          <div class="col position-relative">
+            + {{action.sciencePoints}}
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              x {{action.technologiqueEfficiency}}<span class="visually-hidden">x {{action.technologiqueEfficiency}}</span>
+            </span>
+          </div>
+        </text-with-info-icon>
       </div>
     </div>
     <div v-if="withCityData" class="card-footer bg-primary-subtle text-muted ">
@@ -44,7 +61,8 @@
 <script setup>
 import ActionIcon from "@/components/icons/ActionIcon.vue";
 import {computed} from "vue";
-import TextWithResourceIcon from "@/components/utilities/textWithResourceIcon.vue";
+import {getCategoryColorCode, getTechCategoryName} from "@/Helpers.js";
+import TextWithInfoIcon from "@/components/utilities/textWithInfoIcon.vue";
 
 const { actionData, cityData, withCityData } = defineProps({
   actionData: {

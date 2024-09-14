@@ -38,3 +38,19 @@ export function getActionColorCode(action) {
 export function getFormatedDate(date) {
     return new Date(date).toLocaleString('fr-FR', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone });
 }
+
+// get name of the tech category depending on the category
+export function getTechCategoryName(category) {
+    switch (category) {
+        case "TheoryResearch":
+            return "Théorie";
+        case "MilitaryResearch":
+            return "Militaire";
+        case "EngineeringResearch":
+            return "Ingénierie";
+        case "GeopoliticResearch":
+            return "Géopolitique";
+        default:
+            return "Inconnu";
+    }
+}

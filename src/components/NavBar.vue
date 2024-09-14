@@ -10,11 +10,13 @@ const logout = () => {
     authStore.logout();
 }
 </script>
-
 <template>
-  <nav class="m-2 navbar navbar-expand-lg navbar-dark navbar-blur mb-5">
+  <nav class="mt-0 navbar navbar-expand-lg navbar-dark mb-5">
     <div class="container">
-      <RouterLink class="navbar-brand" to="/">Little Conqueror - {{ pageName.charAt(0).toUpperCase() + pageName.slice(1) }}</RouterLink>
+      <RouterLink class="navbar-brand" to="/">
+        <img src="../assets/icon.png" alt="logo" width="100" height="100" class="game-title position-absolute top-0 d-md-none start-50 translate-middle-x" />
+        <img src="../assets/icon.png" alt="logo" width="100" height="100" class="game-title position-absolute top-0 d-none d-md-block" />
+      </RouterLink>
       <button class="navbar-toggler"
               type="button"
               data-bs-toggle="collapse"
@@ -57,4 +59,13 @@ const logout = () => {
   </nav>
 </template>
 <style scoped>
+.navbar {
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.game-title {
+  -webkit-filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.51));
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.51));
+}
 </style>

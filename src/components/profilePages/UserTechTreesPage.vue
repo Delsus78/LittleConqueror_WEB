@@ -1,17 +1,21 @@
 <template>
   <div class="container">
     <div class="nav nav-pills">
-      <button @click="techPageCategory = 'TheoryResearch'" :class="{'active': techPageCategory === 'TheoryResearch'}" class="nav-link fw-bold fs-4">
-        Theories
+      <button @click="techPageCategory = 'TheoryResearch'" :class="{'active': techPageCategory === 'TheoryResearch'}" class="fw-bold fs-4 nav-link"
+              :style="{color: getCategoryColorCode('TheoryResearch')}">
+        <TechCategoryIcon category-name='TheoryResearch'/> Theories
       </button>
-      <button @click="techPageCategory = 'EngineeringResearch'" :class="{'active': techPageCategory === 'EngineeringResearch'}" class="nav-link fw-bold fs-4">
-        Ingenieries
+      <button @click="techPageCategory = 'EngineeringResearch'" :class="{'active': techPageCategory === 'EngineeringResearch'}" class="nav-link fw-bold fs-4"
+              :style="{color: getCategoryColorCode('EngineeringResearch')}">
+        <TechCategoryIcon category-name='EngineeringResearch'/> Ingenieries
       </button>
-      <button @click="techPageCategory = 'GeopoliticResearch'" :class="{'active': techPageCategory === 'GeopoliticResearch'}" class="nav-link fw-bold fs-4">
-        Geopolitiques
+      <button @click="techPageCategory = 'GeopoliticResearch'" :class="{'active': techPageCategory === 'GeopoliticResearch'}" class="nav-link fw-bold fs-4"
+              :style="{color: getCategoryColorCode('GeopoliticResearch')}">
+        <TechCategoryIcon category-name='GeopoliticResearch'/> Geopolitiques
       </button>
-      <button @click="techPageCategory = 'MilitaryResearch'" :class="{'active': techPageCategory === 'MilitaryResearch'}" class="nav-link fw-bold fs-4">
-        Militaires
+      <button @click="techPageCategory = 'MilitaryResearch'" :class="{'active': techPageCategory === 'MilitaryResearch'}" class="nav-link fw-bold fs-4"
+              :style="{color: getCategoryColorCode('MilitaryResearch')}">
+        <TechCategoryIcon category-name='MilitaryResearch'/> Militaires
       </button>
 
     </div>
@@ -28,6 +32,7 @@ import TechTree from "@/components/TechTree/TechTree.vue";
 import {computed, ref} from "vue";
 import {useTechResearchStore} from "@/stores/index.js";
 import {getCategoryColorCode} from "@/Helpers.js";
+import TechCategoryIcon from "@/components/icons/TechCategoryIcon.vue";
 
 const techPageCategory = ref("TheoryResearch");
 const store = useTechResearchStore();
@@ -81,5 +86,9 @@ const filterDataEdgesMap = (dataEdges, dataNodes) => {
 
 </script>
 <style scoped>
-
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  background-color: rgba(255, 255, 255, 0);
+  border: 1px solid rgb(255, 255, 255);
+  backdrop-filter: blur(10px);
+}
 </style>

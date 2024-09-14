@@ -20,7 +20,7 @@
                   @click="emit('show-city-on-map', cityData)">
             <font-awesome-icon icon="map-marked-alt"/> Afficher sur la carte
           </button>
-          <set-action-to-city-modal :actualAction="cityData.action" @valid-action-change="(newActionType) => emit('modify-city-action', newActionType)"/>
+          <set-action-to-city-modal :actualAction="cityData.action" @valid-action-change="(newActionType, params) => emit('modify-city-action', newActionType, params)"/>
           <button type="button" class="btn btn-outline-danger"
                   @click="emit('abandon-city', cityData.id)">
             <font-awesome-icon icon="triangle-exclamation"/> Abandonner

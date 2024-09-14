@@ -1,13 +1,13 @@
 <template>
   <img src="@/assets/world_map.png" alt="world map" class="w-100 background-img"/>
   <div class="container">
-    <div class="title m-5 text-center">
-      <h1 class="text-center text-white display-1">Little Conqueror</h1>
+    <div class="mt-5 text-center">
+      <img src="../assets/icon.png" alt="logo" width="300" height="300" class="title" />
     </div>
     <!-- login form -->
     <div class="row justify-content-center">
       <div class="col-12 col-md-6 col-lg-4">
-        <div class="card mt-5 bg-transparent border-danger-subtle">
+        <div class="card mt-5 bg-transparent shadow rounded-4 bg-blurred">
           <div class="card-body">
             <h5 class="card-title text-center text-white">Connexion</h5>
             <form class="connexionForm">
@@ -83,7 +83,7 @@ const onLoginBtnClick = () => {
   height: 100vh;
   z-index: -1000;
   opacity: 0.1;
-  filter: blur(10px);
+  filter: blur(4px) drop-shadow(0 0 20px rgb(255, 255, 255));
   transform: scale(1.1);
   object-fit: cover;
   object-position: center;
@@ -96,5 +96,9 @@ const onLoginBtnClick = () => {
   -ms-user-select: none;
   -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+.title {
+  filter: drop-shadow(0 -20px 20px rgba(255, 0, 0, 0.51));
 }
 </style>
