@@ -99,6 +99,6 @@ const onLoginBtnClick = () => {
 }
 
 .title {
-  filter: drop-shadow(0 -20px 20px rgba(255, 0, 0, 0.51));
+  filter: drop-shadow(0 -20px 20px rgba(255, 0, 0, 0.51)) drop-shadow(0 20px 20px rgba(0, 51, 255, 0.3));
 }
 </style>

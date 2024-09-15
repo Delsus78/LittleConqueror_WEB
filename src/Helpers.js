@@ -54,3 +54,17 @@ export function getTechCategoryName(category) {
             return "Inconnu";
     }
 }
+
+// get the color from its status
+export function getColorFromStatus(status) {
+    switch (status.toLowerCase()) {
+        case "undiscovered":
+            return "#000000";
+        case "researching":
+            return "#ff5600";
+        case "researched":
+            return "#60d203";
+        default:
+            return "#000000";
+    }
+}

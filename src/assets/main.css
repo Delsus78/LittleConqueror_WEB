@@ -1,4 +1,4 @@
-@import "legendaireEffect.css";
+@import "shadowEffects.css";
 
 body {
     background-color: #0f172a;
@@ -32,6 +32,10 @@ body {
 
 .text-shadow {
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
+}
+
+.text-shadow-white {
+    text-shadow: 0 0 5px rgb(255, 255, 255);
 }
 
 .shadow-inside {

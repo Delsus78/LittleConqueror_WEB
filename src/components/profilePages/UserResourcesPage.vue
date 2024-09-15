@@ -5,16 +5,16 @@
       <statistic-item :value="userData.totalCities" icon="city" name="Villes"/>
       <h4 class="text-white mt-3 text-decoration-underline">Points de recherche</h4>
       <progress-bar-item icon="book" name="Theorique" :pourcentage="100" :color="getCategoryColorCode('TheoryResearch')">
-        <strong class="text-shadow ">{{researchPoints.theoryResearch}}</strong>
+        <strong class="text-shadow-white text-black">{{researchPoints.theoryResearch}}</strong>
       </progress-bar-item>
       <progress-bar-item icon="book" name="Ingénieur" :pourcentage="100" :color="getCategoryColorCode('EngineeringResearch')">
-        <strong>{{researchPoints.engineeringResearch}}</strong>
+        <strong class="text-shadow-white text-black">{{researchPoints.engineeringResearch}}</strong>
       </progress-bar-item>
       <progress-bar-item icon="book" name="Militaire" :pourcentage="100" :color="getCategoryColorCode('MilitaryResearch')">
-        <strong>{{researchPoints.militaryResearch}}</strong>
+        <strong class="text-shadow-white text-black">{{researchPoints.militaryResearch}}</strong>
       </progress-bar-item>
       <progress-bar-item icon="book" name="Geopolitique" :pourcentage="100" :color="getCategoryColorCode('GeopoliticResearch')">
-        <strong>{{researchPoints.geopoliticResearch}}</strong>
+        <strong class="text-shadow-white text-black">{{researchPoints.geopoliticResearch}}</strong>
       </progress-bar-item>
     </div>
     <div class="col-md-9">
