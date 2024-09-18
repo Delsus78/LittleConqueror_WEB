@@ -17,10 +17,14 @@
               :style="{color: getCategoryColorCode('MilitaryResearch')}">
         <TechCategoryIcon category-name='MilitaryResearch'/> Militaires
       </button>
+      <button @click="techPageCategory = 'all'" :class="{'active': techPageCategory === 'all'}" class="nav-link fw-bold fs-4"
+              :style="{color: 'white'}">
+        <InfoIcon resource-name="all" size="lg"/> Tous
+      </button>
 
     </div>
 
-    <tech-tree
+    <tech-tree class="mt-3 rounded shadow-lg border border-3 border-light-subtle bg-blurred"
         :data="dataToDisplay"
         :target-node="targetNode"
         :bgColor="bgColor"
@@ -33,6 +37,7 @@ import {computed, ref} from "vue";
 import {useTechResearchStore} from "@/stores/index.js";
 import {getCategoryColorCode} from "@/Helpers.js";
 import TechCategoryIcon from "@/components/icons/TechCategoryIcon.vue";
+import InfoIcon from "@/components/icons/InfoIcon.vue";
 
 const techPageCategory = ref("TheoryResearch");
 const store = useTechResearchStore();
@@ -71,7 +76,7 @@ const dataToDisplay = computed(() => {
 const filterDataNodesMap = (dataNodes, techCategory) => {
   return Object.fromEntries(
       Object.entries(dataNodes).filter(([nodeId, node]) => {
-        return node.category === techCategory || node.category === "root";
+        return (node.category === techCategory || techCategory === 'all') || node.category === "root";
       })
   );
 };

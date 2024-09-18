@@ -10,6 +10,7 @@ import {
     faBook,
     faCalculator,
     faCheck,
+    faCheckDouble,
     faCircleExclamation,
     faCity,
     faCog,
@@ -124,5 +125,6 @@ export function importIcons() {
         faTractor,
         faRoad,
         faTrain,
+        faCheckDouble
     );
 }

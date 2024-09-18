@@ -68,3 +68,13 @@ export function getColorFromStatus(status) {
             return "#000000";
     }
 }
+
+// get the pourcentage of the research from a startSearchingDate and a endSearchingDate
+export function getResearchPourcentage(startSearchingDate, endSearchingDate) {
+    const startDate = new Date(startSearchingDate);
+    const endDate = new Date(endSearchingDate);
+    const currentDate = new Date();
+    const total = endDate - startDate;
+    const current = currentDate - startDate;
+    return (current / total) * 100;
+}

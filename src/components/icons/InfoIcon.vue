@@ -29,6 +29,10 @@ const icon = computed(() => {
       return 'people-roof';
     case 'agriculturalFertility':
       return 'seedling';
+    case 'checked':
+      return 'check';
+    case 'all':
+      return 'check-double';
     default:
       return 'question';
   }
