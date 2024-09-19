@@ -49,13 +49,14 @@ export const useTechResearchStore = defineStore('tech-research',() => {
                 description: techResearch.description,
                 cost: techResearch.cost,
                 category: techResearch.researchCategory,
-                researchStatus: techResearch.researchType === "Gribouillis" ? "Researched" : techResearch.researchStatus
+                researchStatus: techResearch.researchStatus
             };
 
             if (techResearch.prerequisites.length === 0) {
-                edges["edge"+edgeId] = {
+                edges["edge_Root_to_"+techResearch.researchType] = {
                     source: "Root",
-                    target: techResearch.researchType
+                    target: techResearch.researchType,
+                    status: techResearch.researchStatus
                 };
                 edgeId++;
             } else {
@@ -68,9 +69,10 @@ export const useTechResearchStore = defineStore('tech-research',() => {
                     };
                 });
                 techResearch.prerequisites.forEach(prerequisite => {
-                    edges["edge"+edgeId] = {
+                    edges["edge_" + prerequisite + "_to_" + techResearch.researchType] = {
                         source: prerequisite,
-                        target: techResearch.researchType
+                        target: techResearch.researchType,
+                        status: techResearch.researchStatus
                     };
                     edgeId++;
                 });

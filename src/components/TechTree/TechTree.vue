@@ -7,6 +7,7 @@
         :edges="data.edges"
         :layouts="layouts"
         :configs="configs"
+        :paths="paths.value"
         :target-node="targetNode"
         :event-handlers="eventHandlers">
 
@@ -61,9 +62,9 @@
                 :height="config.height"
                 :rx="config.borderRadius"
                 :ry="config.borderRadius"
-                :stroke="getColorFromStatus(data.nodes[nodeId].researchStatus)"
+                :stroke="config.strokeColor"
                 :stroke-width="config.borderWidth"
-                :fill="getCategoryColorCode(data.nodes[nodeId].category)"
+                :fill="config.fillColor"
                 :cursor="config.cursor"
                 @click="slotProps.onClick"
                 @mouseenter="slotProps.onMouseEnter"
@@ -213,39 +214,64 @@ const configs = defineConfigs({
       height: nodeSize * 2,
       borderRadius: 4,
       color: "black",
-      colorOnUndiscovered: "#333333",
-
+      strokeColor: item => getColorFromStatus(item.researchStatus),
+      fillColor: item => getCategoryColorCode(item.category),
       nameColor: "#ffffff",
       descriptionColor: "#ffffff",
       costColor: "#000000",
       prerequisColor: "#f0f0f0",
-      borderWidth: 1,
+      borderWidth: 2,
+      cursor: "pointer",
     },
     hover: {
-      color: "#ff6f00",
       bgColor: "#6085d7",
-      colorOnUndiscovered: "#333333",
+      strokeColor: item => getColorFromStatus(item.researchStatus),
+      fillColor: item => getCategoryColorCode(item.category) + (item.researchStatus !== "Researched" ? "80" : ""),
 
       nameColor: "#ffffff",
       descriptionColor: "#ffffff",
       costColor: "#000000",
       prerequisColor: "#f0f0f0",
+      cursor: "pointer",
     },
     label: {
       visible: false,
     }
   },
   edge: {
-    margin: 0,
-
     normal: {
-      color: "#ffffff",
+      width: 3,
+      dasharray: edge => (edge.status === "Researching" ? "4" : "0"),
+      animate: edge => edge.status === "Researching",
+      color: edge => getColorFromStatus(edge.status),
       linecap: "round",
     },
     hover: {
-      color: "#ffffff",
+      width: 3,
+      dasharray: edge => (edge.status === "Researching" ? "4" : "0"),
+      animate: edge => edge.status === "Researching",
+      color: edge => getColorFromStatus(edge.status),
+      linecap: "round",
     },
   },
+  path: {
+    visible: true,
+    clickable: true,
+    hoverable: true,
+    selectable: true,
+    curveInNode: false,
+    end: "centerOfNode", // "centerOfNode" or "edgeOfNode"
+    margin: 0,
+    normal: {
+      width: 10,
+      color: "#ff800088",
+      dasharray: "",
+      linecap: "round",
+      linejoin: "round",
+      animate: false,
+      animationSpeed: 50,
+    },
+  }
 })
 const zoomLevel = ref(1)
 
@@ -254,8 +280,54 @@ const layouts = reactive({
   nodes: {},
 })
 
-const eventHandlers = {
+const paths = reactive({
+  value: {},
+})
 
+const eventHandlers = {
+  "node:click": (nodeData) => {
+    console.log(nodeData)
+    console.log(data)
+    if (data.nodes[nodeData.node].category !== "root") {
+      centerNode(nodeData.node)
+      paths.value = findPathFromRoot(nodeData.node)
+    }
+  },
+}
+
+function centerNode(nodeId) {
+  graph.value?.setViewBox({
+    left: layouts.nodes[nodeId].x - nodeSize * 3.6,
+    top: layouts.nodes[nodeId].y - nodeSize * 2,
+    right: layouts.nodes[nodeId].x + nodeSize * 3.6,
+    bottom: layouts.nodes[nodeId].y + nodeSize * 2,
+  })
+}
+
+function findPathFromRoot(endNodeId) {
+  const result = {}
+  const endNode = data.nodes[endNodeId]
+
+  let currentNode = endNode
+  let currentNodeId = endNodeId
+  let path = { edges: [] }
+  while (currentNode && currentNode.category !== "root") {
+    console.log(currentNode)
+    if (!currentNode.prerequisitesData || currentNode.prerequisitesData.length === 0) {
+      path.edges.push("edge_Root_to_" + currentNodeId)
+      currentNode = data.nodes["Root"]
+      currentNodeId = "Root"
+    } else {
+      const prereq = currentNode.prerequisitesData[0].researchType
+      path.edges.push("edge_" + prereq + "_to_" + currentNodeId)
+      currentNode = data.nodes[prereq]
+      currentNodeId = prereq
+    }
+  }
+
+  result["Path" + endNodeId] = path
+  console.log(result)
+  return result
 }
 
 function layout(direction) {

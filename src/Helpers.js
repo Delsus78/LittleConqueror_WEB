@@ -59,7 +59,7 @@ export function getTechCategoryName(category) {
 export function getColorFromStatus(status) {
     switch (status.toLowerCase()) {
         case "undiscovered":
-            return "#000000";
+            return "#ffffff";
         case "researching":
             return "#ff5600";
         case "researched":
