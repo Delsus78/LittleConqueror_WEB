@@ -28,7 +28,9 @@
         :data="dataToDisplay"
         :target-node="targetNode"
         :bgColor="bgColor"
-        :key="techPageCategory"/>
+        :key="techPageCategory" @toggle-offcanvas="toggleTechResearchOffCanvas"/>
+
+    <tech-research-modal :techResearchId="selectedNodeId" :key="selectedNodeId"/>
   </div>
 </template>
 <script setup>
@@ -38,11 +40,13 @@ import {useTechResearchStore} from "@/stores/index.js";
 import {getCategoryColorCode} from "@/Helpers.js";
 import TechCategoryIcon from "@/components/icons/TechCategoryIcon.vue";
 import InfoIcon from "@/components/icons/InfoIcon.vue";
+import TechResearchModal from "@/components/modals/TechResearchModal.vue";
 
 const techPageCategory = ref("TheoryResearch");
 const store = useTechResearchStore();
 const researchData = await store.fetchTechResearches();
 const data = store.transformTechResearchesToVNetworkGraph(researchData);
+const selectedNodeId = ref('Armement_I');
 
 const targetNode = ref("Root");
 const bgColor = computed(() => {
@@ -87,6 +91,14 @@ const filterDataEdgesMap = (dataEdges, dataNodes) => {
         return dataNodes[edge.source] && dataNodes[edge.target];
       })
   );
+};
+
+const toggleTechResearchOffCanvas = (nodeId) => {
+  selectedNodeId.value = nodeId;
+  setTimeout(() => {
+    const offCanvas = new bootstrap.Offcanvas(document.getElementById('techResearchModal'));
+    offCanvas.show();
+  }, 100);
 };
 
 </script>

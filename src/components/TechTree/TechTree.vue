@@ -198,6 +198,7 @@ const { data, targetNode, bgColor } = defineProps({
   },
 })
 
+const emit = defineEmits(["toggle-offcanvas"]);
 const nodeSize = 45;
 const graph = ref();
 const configs = defineConfigs({
@@ -286,11 +287,10 @@ const paths = reactive({
 
 const eventHandlers = {
   "node:click": (nodeData) => {
-    console.log(nodeData)
-    console.log(data)
     if (data.nodes[nodeData.node].category !== "root") {
       centerNode(nodeData.node)
       paths.value = findPathFromRoot(nodeData.node)
+      emit("toggle-offcanvas", nodeData.node)
     }
   },
 }
@@ -312,7 +312,7 @@ function findPathFromRoot(endNodeId) {
   let currentNodeId = endNodeId
   let path = { edges: [] }
   while (currentNode && currentNode.category !== "root") {
-    console.log(currentNode)
+
     if (!currentNode.prerequisitesData || currentNode.prerequisitesData.length === 0) {
       path.edges.push("edge_Root_to_" + currentNodeId)
       currentNode = data.nodes["Root"]
@@ -326,7 +326,7 @@ function findPathFromRoot(endNodeId) {
   }
 
   result["Path" + endNodeId] = path
-  console.log(result)
+
   return result
 }
 
