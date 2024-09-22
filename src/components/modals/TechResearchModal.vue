@@ -15,7 +15,7 @@
 
       <div class="p-2 border-top border-light">
         <h5>Prérequis</h5>
-        <div v-if="techResearch.prerequisitesData.length === 0">
+        <div v-if="techResearch.prerequisitesData?.length === 0">
           <p>Aucun</p>
         </div>
         <div v-else v-for="prerequisite in techResearch.prerequisitesData" :key="prerequisite.researchType"
