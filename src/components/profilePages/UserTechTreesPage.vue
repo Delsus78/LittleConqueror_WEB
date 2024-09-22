@@ -30,7 +30,7 @@
         :bgColor="bgColor"
         :key="techPageCategory" @toggle-offcanvas="toggleTechResearchOffCanvas"/>
 
-    <tech-research-modal :techResearchId="selectedNodeId" :key="selectedNodeId"/>
+    <tech-research-modal v-if="selectedNode !== null" :techResearch="selectedNode" :key="selectedNode"/>
   </div>
 </template>
 <script setup>
@@ -46,7 +46,7 @@ const techPageCategory = ref("TheoryResearch");
 const store = useTechResearchStore();
 const researchData = await store.fetchTechResearches();
 const data = store.transformTechResearchesToVNetworkGraph(researchData);
-const selectedNodeId = ref('Armement_I');
+const selectedNode = ref(null);
 
 const targetNode = ref("Root");
 const bgColor = computed(() => {
@@ -62,7 +62,7 @@ const dataToDisplay = computed(() => {
 
 
   result.edges = filterDataEdgesMap(result.edges, result.nodes);
-  console.log(result)
+
   // populate required tech with their research status
   for (const [nodeId, node] of Object.entries(result.nodes)) {
     if (node.category === "root") {
@@ -94,7 +94,7 @@ const filterDataEdgesMap = (dataEdges, dataNodes) => {
 };
 
 const toggleTechResearchOffCanvas = (nodeId) => {
-  selectedNodeId.value = nodeId;
+  selectedNode.value = data.nodes[nodeId];
   setTimeout(() => {
     const offCanvas = new bootstrap.Offcanvas(document.getElementById('techResearchModal'));
     offCanvas.show();

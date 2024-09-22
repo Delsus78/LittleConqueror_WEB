@@ -293,6 +293,12 @@ const eventHandlers = {
       emit("toggle-offcanvas", nodeData.node)
     }
   },
+  "view:contextmenu": (params) => {
+    const {event} = params
+    event.stopPropagation()
+    event.preventDefault()
+    graph.value?.fitToContents()
+  },
 }
 
 function centerNode(nodeId) {
