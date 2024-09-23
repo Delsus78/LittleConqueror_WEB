@@ -78,3 +78,38 @@ export function getResearchPourcentage(startSearchingDate, endSearchingDate) {
     const current = currentDate - startDate;
     return (current / total) * 100;
 }
+
+// get color depending on the availability of the research
+export function getAvailabilityColor(availability) {
+    console.log(availability)
+    switch (availability.toLowerCase()) {
+        case "available":
+            return "rgba(96,210,3,0.5)";
+        case "notenoughsciencepoints":
+        case "prerequisitetechresearchnotcompleted":
+            return "rgba(255,86,0,0.5)";
+        case "techresearchalreadyinprogressorcompleted":
+        case "anothertechresearchisalreadyinprogress":
+            return "rgba(134,134,134,0.5)";
+        default:
+            return "#000000";
+    }
+}
+
+// get text depending on the availability of the research
+export function getAvailabilityText(availability) {
+    switch (availability.toLowerCase()) {
+        case "available":
+            return "Disponible";
+        case "notenoughsciencepoints":
+            return "Pas assez de points de recherche";
+        case "prerequisitetechresearchnotcompleted":
+            return "Recherche(s) prérequise(s) non complétée(s)";
+        case "techresearchalreadyinprogressorcompleted":
+            return "Recherche déjà en cours ou complétée";
+        case "anothertechresearchisalreadyinprogress":
+            return "Une autre recherche est déjà en cours";
+        default:
+            return "Inconnu";
+    }
+}

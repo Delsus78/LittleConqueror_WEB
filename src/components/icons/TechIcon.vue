@@ -24,11 +24,11 @@ const icon = computed(() => {
     case 'root':
       return 'play';
     // Miltaire
-    case 'armement_I':
+    case 'armement_i':
       return 'bomb';
-    case 'armement_II':
+    case 'armement_ii':
       return 'fighter-jet';
-    case 'armement_III':
+    case 'armement_iii':
       return 'fighter-jet';
     case 'poudre_a_canon':
       return 'bomb';

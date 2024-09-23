@@ -36,7 +36,7 @@ export const useTechResearchStore = defineStore('tech-research',() => {
                 name: "Root",
                 description: "Root",
                 cost: 0,
-                category: "root",
+                researchCategory: "root",
                 researchStatus: "root"
             }
         };
@@ -45,11 +45,7 @@ export const useTechResearchStore = defineStore('tech-research',() => {
 
         techResearches.forEach(techResearch => {
             nodes[techResearch.researchType] = {
-                name: techResearch.name,
-                description: techResearch.description,
-                cost: techResearch.cost,
-                category: techResearch.researchCategory,
-                researchStatus: techResearch.researchStatus
+                ...techResearch
             };
 
             if (techResearch.prerequisites.length === 0) {
@@ -65,7 +61,7 @@ export const useTechResearchStore = defineStore('tech-research',() => {
                         name: techResearches.find(techResearch => techResearch.researchType === prerequisite).name,
                         researchType: prerequisite,
                         researchStatus: techResearches.find(techResearch => techResearch.researchType === prerequisite).researchStatus,
-                        category: techResearches.find(techResearch => techResearch.researchType === prerequisite).researchCategory
+                        researchCategory: techResearches.find(techResearch => techResearch.researchType === prerequisite).researchCategory
                     };
                 });
                 techResearch.prerequisites.forEach(prerequisite => {

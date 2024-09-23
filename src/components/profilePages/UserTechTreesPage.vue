@@ -65,7 +65,7 @@ const dataToDisplay = computed(() => {
 
   // populate required tech with their research status
   for (const [nodeId, node] of Object.entries(result.nodes)) {
-    if (node.category === "root") {
+    if (node.researchCategory === "root") {
       continue;
     }
     const research = researchData.find(research => research.techId === nodeId);
@@ -80,7 +80,7 @@ const dataToDisplay = computed(() => {
 const filterDataNodesMap = (dataNodes, techCategory) => {
   return Object.fromEntries(
       Object.entries(dataNodes).filter(([nodeId, node]) => {
-        return (node.category === techCategory || techCategory === 'all') || node.category === "root";
+        return (node.researchCategory === techCategory || techCategory === 'all') || node.researchCategory === "root";
       })
   );
 };

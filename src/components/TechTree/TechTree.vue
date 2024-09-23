@@ -44,7 +44,7 @@
           </filter>
         </defs>
 
-        <g v-if="data.nodes[nodeId].category !== 'root'">
+        <g v-if="data.nodes[nodeId].researchCategory !== 'root'">
           <!-- Rectangle de fond -->
           <rect v-if="data.nodes[nodeId].rarity === 'legendary'"
               :x="-config.width / 2"
@@ -141,7 +141,7 @@
               height="25">
             <div xmlns="http://www.w3.org/1999/xhtml">
               <TechIcon :tech-id="prereq.researchType" size="sm"
-                        :style="`color: ` + getCategoryColorCode(prereq.category) + `;` +
+                        :style="`color: ` + getCategoryColorCode(prereq.researchCategory) + `;` +
                                 `filter: drop-shadow(2px 0 2px rgb(0 0 0 / 1));`"/>
             </div>
           </foreignObject>
@@ -216,7 +216,7 @@ const configs = defineConfigs({
       borderRadius: 4,
       color: "black",
       strokeColor: item => getColorFromStatus(item.researchStatus),
-      fillColor: item => getCategoryColorCode(item.category),
+      fillColor: item => getCategoryColorCode(item.researchCategory),
       nameColor: "#ffffff",
       descriptionColor: "#ffffff",
       costColor: "#000000",
@@ -227,7 +227,7 @@ const configs = defineConfigs({
     hover: {
       bgColor: "#6085d7",
       strokeColor: item => getColorFromStatus(item.researchStatus),
-      fillColor: item => getCategoryColorCode(item.category) + (item.researchStatus !== "Researched" ? "80" : ""),
+      fillColor: item => getCategoryColorCode(item.researchCategory) + (item.researchStatus !== "Researched" ? "80" : ""),
 
       nameColor: "#ffffff",
       descriptionColor: "#ffffff",
@@ -287,7 +287,7 @@ const paths = reactive({
 
 const eventHandlers = {
   "node:click": (nodeData) => {
-    if (data.nodes[nodeData.node].category !== "root") {
+    if (data.nodes[nodeData.node].researchCategory !== "root") {
       centerNode(nodeData.node)
       paths.value = findPathFromRoot(nodeData.node)
       emit("toggle-offcanvas", nodeData.node)
@@ -317,7 +317,7 @@ function findPathFromRoot(endNodeId) {
   let currentNode = endNode
   let currentNodeId = endNodeId
   let path = { edges: [] }
-  while (currentNode && currentNode.category !== "root") {
+  while (currentNode && currentNode.researchCategory !== "root") {
 
     if (!currentNode.prerequisitesData || currentNode.prerequisitesData.length === 0) {
       path.edges.push("edge_Root_to_" + currentNodeId)

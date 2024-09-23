@@ -26,7 +26,7 @@ export const useActionStore = defineStore('actions', () => {
         if(!userActionsList.value[pageIndex] || forceRefresh) {
             const { userId } = storeToRefs(useAuthStore());
 
-             const response = await fetchWrapper.get(`${baseUrl}/Actions?page=${pageIndex}&pageSize=${pageSize}`)
+             const response = await fetchWrapper.get(`${baseUrl}/Actions/${userId.value}?page=${pageIndex}&pageSize=${pageSize}`)
                 .catch(error => {
                     console.error(error);
                     return Promise.reject(error);
