@@ -28,12 +28,10 @@ const { actualPage } = storeToRefs(pageStore);
 const actualActionListToDisplay = ref(actionStore.getActionListToDisplay(actualPage.value));
 
 const maxPages = computed(() => {
-  console.log(totalActions.value);
   return Math.ceil(totalActions.value / 10);
 });
 
 async function onPaginationChange(pageNumber) {
-  console.log(pageNumber);
   actualPage.value = pageNumber;
 
   await actionStore.getActionPaginationList(pageNumber, 10);

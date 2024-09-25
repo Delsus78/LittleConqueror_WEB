@@ -25,7 +25,7 @@ function request(method) {
             })
             .catch(error => {
                 console.error('Request failed:', error);
-                throw error;
+                return Promise.reject(error);
             });
     }
 }

@@ -149,14 +149,16 @@
           <!-- ProgressBar for startSearchingDate and endSearchingDate -->
           <foreignObject v-if="data.nodes[nodeId].researchStatus.toLowerCase() === 'researching'"
               :x="-config.width / 2 + 5"
-              :y="config.height / 2 - 10"
-              width="90"
-              height="10">
+              :y="config.height / 2 - 50"
+              width="100"
+              height="50">
             <div xmlns="http://www.w3.org/1999/xhtml">
+              <span style="font-size: x-small">{{ techResearchTimeLeftMap[nodeId] }}</span>
               <div class="progress">
-                <div class="progress-bar bg-success" role="progressbar"
-                     :style="`width: ` + getResearchPourcentage(data.nodes[nodeId].startSearchingDate, data.nodes[nodeId].endSearchingDate) + `%`"
-                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar"
+                     :style="`width: ${techResearchPourcentageMap[nodeId]}%;`"
+                     aria-valuemin="0" aria-valuemax="100">
+                </div>
               </div>
             </div>
           </foreignObject>
@@ -181,9 +183,14 @@ import {defineConfigs} from "v-network-graph";
 import dagre from "dagre";
 import {reactive, ref} from "vue";
 import TechIcon from "@/components/icons/TechIcon.vue";
-import {getCategoryColorCode, getColorFromStatus, getResearchPourcentage} from "@/Helpers.js";
+import {
+  getCategoryColorCode,
+  getColorFromStatus
+} from "@/Helpers.js";
 import InfoIcon from "@/components/icons/InfoIcon.vue";
-const { data, targetNode, bgColor } = defineProps({
+import {useTechResearchStore} from "@/stores/index.js";
+import {storeToRefs} from "pinia";
+const { data, targetNode } = defineProps({
   data: {
     type: Object,
     required: true,
@@ -191,13 +198,10 @@ const { data, targetNode, bgColor } = defineProps({
   targetNode: {
     type: String,
     required: true,
-  },
-  bgColor: {
-    type: String,
-    default: "#74c9ef",
-  },
+  }
 })
-
+const store = useTechResearchStore();
+const { techResearchTimeLeftMap, techResearchPourcentageMap } = storeToRefs(store);
 const emit = defineEmits(["toggle-offcanvas"]);
 const nodeSize = 45;
 const graph = ref();
@@ -275,7 +279,6 @@ const configs = defineConfigs({
   }
 })
 const zoomLevel = ref(1)
-
 
 const layouts = reactive({
   nodes: {},

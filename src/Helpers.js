@@ -71,17 +71,20 @@ export function getColorFromStatus(status) {
 
 // get the pourcentage of the research from a startSearchingDate and a endSearchingDate
 export function getResearchPourcentage(startSearchingDate, endSearchingDate) {
-    const startDate = new Date(startSearchingDate);
-    const endDate = new Date(endSearchingDate);
+    const startDate = new Date(startSearchingDate + 'Z');
+    const endDate = new Date(endSearchingDate + 'Z');
     const currentDate = new Date();
     const total = endDate - startDate;
     const current = currentDate - startDate;
-    return (current / total) * 100;
+
+    // S'assurer que le pourcentage est entre 0% et 100%
+    const percentage = Math.min(Math.max((current / total) * 100, 0), 100);
+
+    return percentage.toFixed(2);
 }
 
 // get color depending on the availability of the research
 export function getAvailabilityColor(availability) {
-    console.log(availability)
     switch (availability.toLowerCase()) {
         case "available":
             return "rgba(96,210,3,0.5)";
@@ -112,4 +115,28 @@ export function getAvailabilityText(availability) {
         default:
             return "Inconnu";
     }
+}
+
+// Fonction pour obtenir le temps formaté entre deux dates
+// Format des dates fournies : "2024-09-24T16:33:37.387406"
+// Format de retour : "23h 59m 59s"
+// Prend en compte le fuseau horaire local
+export function getFormatedTimeBetweenTwoDates(startSearchingDate, endSearchingDate) {
+    const endDate = new Date(endSearchingDate + 'Z');
+
+    // Obtenir la date actuelle
+    const currentDate = new Date();
+
+    // Calculer le temps restant en millisecondes
+    const remainingTime = endDate - currentDate;
+
+    // Si le temps restant est négatif, le définir à zéro
+    const remainingTimePositive = Math.max(0, remainingTime);
+
+    // Convertir le temps restant en heures, minutes et secondes
+    const hours = Math.floor(remainingTimePositive / 3600000);
+    const minutes = Math.floor((remainingTimePositive % 3600000) / 60000);
+    const seconds = Math.floor((remainingTimePositive % 60000) / 1000);
+
+    return `${hours}h ${minutes}m ${seconds}s`;
 }

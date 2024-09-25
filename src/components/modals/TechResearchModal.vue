@@ -7,17 +7,20 @@
     </div>
     <div class="offcanvas-body">
       <div class="border-bottom">
-        <h3>{{techResearch.name}}</h3>
-        <p>{{techResearch.description}}</p>
-      </div>
-
-      <div class="border-bottom mt-2">
-        <h3>
+        <h3 class="justify-content-between d-flex">
+          {{techResearch.name}}
           <span class="badge" :style="`background-color:` + getColorFromStatus(techResearch.researchStatus)">
                 {{ techResearch.researchStatus }}
           </span>
         </h3>
+        <p>{{techResearch.description}}</p>
       </div>
+
+      <progress-bar-item icon="gear"
+                         :name="`${techResearchPourcentageMap[techResearch.researchType]}% - ${techResearchTimeLeftMap[techResearch.researchType]}`" spin
+                         :pourcentage="techResearchPourcentageMap[techResearch.researchType]"
+                         :added-css-class-to-progress-bar="'progress-bar-striped progress-bar-animated'"
+                         :color="getCategoryColorCode(techResearch.researchCategory)"/>
 
       <div class="p-2 border-top border-light">
         <h5>Prérequis</h5>
@@ -44,7 +47,7 @@
       <div class="row justify-content-around">
         <div class="col-3">
           <button type="button" class="btn btn-primary mt-3" :disabled="techResearch.researchStatus !== 'Undiscovered'"
-                  @click="emit('research-tech', techResearchId)">
+                  @click="emit('research-tech', techResearch.researchType)">
             Rechercher
           </button>
         </div>
@@ -55,10 +58,19 @@
   </div>
 </template>
 <script setup>
-import {getAvailabilityColor, getAvailabilityText, getCategoryColorCode, getColorFromStatus} from "@/Helpers.js";
+import {
+  getAvailabilityColor,
+  getAvailabilityText,
+  getCategoryColorCode,
+  getColorFromStatus
+} from "@/Helpers.js";
 import TechIcon from "@/components/icons/TechIcon.vue";
 import DataLabelledItem from "@/components/utilities/DataLabelledItem.vue";
-
+import {useTechResearchStore} from "@/stores/index.js";
+import {storeToRefs} from "pinia";
+import ProgressBarItem from "@/components/utilities/ProgressBarItem.vue";
+const store = useTechResearchStore();
+const { techResearchTimeLeftMap, techResearchPourcentageMap } = storeToRefs(store);
 
 const { techResearch } = defineProps({
   techResearch: {

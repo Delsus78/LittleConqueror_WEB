@@ -8,7 +8,7 @@ import { useLeafletMapStore } from "@/stores/index.js";
 const store = useLeafletMapStore();
 
 const map = ref(null);
-const layerGroup = ref(null);
+const featureGroup = ref(null);
 
 const emit = defineEmits(['onMapClick']);
 
@@ -24,25 +24,29 @@ onMounted(() => {
   map.value.on('click', e => emit('onMapClick', e));
 
   // init layerGroup
-  layerGroup.value = L.layerGroup().addTo(map.value);
+  featureGroup.value = L.featureGroup().addTo(map.value);
 
 });
 
 watch(store.$state, (state) => {
 
   // clear the layer group
-  layerGroup.value.clearLayers();
+  featureGroup.value.clearLayers();
 
-  if (state.polygonsDisplayed)
+  if (state.polygonsDisplayed) {
     displayGeoJsonDataOnMap(state.polygonsDisplayed);
+  }
 
   if (state.geoJsonLayer) {
     displayGeoJsonLayerOnMap(state.geoJsonLayer);
   }
 
+  const bounds = featureGroup.value.getBounds();
+  map.value.flyToBounds(bounds);
+
 },{ deep: true });
 
-function displayGeoJsonDataOnMap(geoJsonDataMap) {
+function displayGeoJsonDataOnMap(geoJsonDataMap){
   Object.keys(geoJsonDataMap).forEach(key => {
     const geoJsonData = geoJsonDataMap[key];
 
@@ -51,19 +55,13 @@ function displayGeoJsonDataOnMap(geoJsonDataMap) {
           style: () => ({color: 'red'})
         });
 
-    polygon.addTo(layerGroup.value);
-
-    const bounds = polygon.getBounds();
-    map.value.flyToBounds(bounds);
+    polygon.addTo(featureGroup.value);
   });
 }
 
 function displayGeoJsonLayerOnMap(geoJsonLayer) {
-  const layerGeojson = L.geoJSON(geoJsonLayer.geojson, { style: geoJsonLayer.styleFunc })
-      .addTo(layerGroup.value);
-
-  const bounds = layerGeojson.getBounds();
-  map.value.flyToBounds(bounds);
+  L.geoJSON(geoJsonLayer.geojson, { style: geoJsonLayer.styleFunc })
+      .addTo(featureGroup.value);
 }
 
 </script>

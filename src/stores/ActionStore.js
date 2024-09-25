@@ -34,8 +34,6 @@ export const useActionStore = defineStore('actions', () => {
 
             userActionsList.value[pageIndex] = response.actions;
             totalActions.value = response.totalActions;
-
-            console.log(userActionsList);
         }
 
         return { actions: userActionsList.value[pageIndex], totalActions: totalActions.value };

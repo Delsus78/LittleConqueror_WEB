@@ -27,10 +27,10 @@
     <tech-tree class="mt-3 rounded shadow-lg border border-3 border-light-subtle bg-blurred"
         :data="dataToDisplay"
         :target-node="targetNode"
-        :bgColor="bgColor"
         :key="techPageCategory" @toggle-offcanvas="toggleTechResearchOffCanvas"/>
 
-    <tech-research-modal v-if="selectedNode !== null" :techResearch="selectedNode" :key="selectedNode"/>
+    <tech-research-modal v-if="selectedNode !== null" :techResearch="selectedNode" :key="selectedNode"
+    @research-tech="researchTech"/>
   </div>
 </template>
 <script setup>
@@ -49,9 +49,6 @@ const data = store.transformTechResearchesToVNetworkGraph(researchData);
 const selectedNode = ref(null);
 
 const targetNode = ref("Root");
-const bgColor = computed(() => {
-  return getCategoryColorCode(techPageCategory.value)
-});
 
 const dataToDisplay = computed(() => {
   // copy the data to avoid modifying the original data
@@ -100,6 +97,17 @@ const toggleTechResearchOffCanvas = (nodeId) => {
     offCanvas.show();
   }, 100);
 };
+
+async function researchTech(techResearchId) {
+  await store.postStartResearch(techResearchId)
+      .catch((errorMsg) => {
+        if (errorMsg.includes("tech research in progress")) {
+          if (confirm("Vous avez déjà une recherche en cours, voulez-vous l'annuler pour commencer une nouvelle recherche?")) {
+            store.postStartResearch(techResearchId, true);
+          }
+        }
+      });
+}
 
 </script>
 <style scoped>
