@@ -140,3 +140,12 @@ export function getFormatedTimeBetweenTwoDates(startSearchingDate, endSearchingD
 
     return `${hours}h ${minutes}m ${seconds}s`;
 }
+
+// retourne la couleur en fonction du bonheur de la population (0 étant neutre, au dessus positif, en dessous négatif)
+export function getPopulationHappinessColor(happiness) {
+    if (happiness >= 0) {
+        return "#00FF00";
+    } else if (happiness < 0) {
+        return "#FF0000";
+    }
+}

@@ -20,19 +20,27 @@ import {RouterView} from 'vue-router'
 import NavBar from "@/components/NavBar.vue";
 import TanksBackGround from "@/components/TanksBackGround.vue";
 
-import { useAuthStore } from '@/stores';
+import {useAuthStore, useMainStore} from '@/stores';
 import LoadingView from "@/views/LoadingView.vue";
-import {onErrorCaptured, ref} from "vue";
+import {onErrorCaptured, ref, watch} from "vue";
 import ErrorView from "@/views/ErrorView.vue";
 const store = useAuthStore();
+const mainStore = useMainStore();
 const isErrorOccured = ref(false);
 const errorMessage = ref('');
 
+watch(mainStore.$state, (state) => {
+  isErrorOccured.value = state.error !== null;
+  errorMessage.value = state.error?.message;
+},{ deep: true });
+
 onErrorCaptured((error) => {
-  console.error('Error captured in MainView', error);
+  mainStore.setError(error);
+
   isErrorOccured.value = true;
-  errorMessage.value += error.message;
+  errorMessage.value = error.message;
 });
+
 
 </script>
 <style scoped>

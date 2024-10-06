@@ -5,3 +5,4 @@ export * from './ActionStore.js';
 export * from './TechResearchStore.js';
 
 export * from './LeafletMapStore.js';
+export * from './PagesStores/MainStore.js';

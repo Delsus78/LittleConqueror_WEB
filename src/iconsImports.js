@@ -16,7 +16,7 @@ import {
     faCog,
     faCoins,
     faExchangeAlt,
-    faEye,
+    faEye, faFaceSmileBeam,
     faFighterJet,
     faFlask,
     faGasPump,
@@ -125,6 +125,7 @@ export function importIcons() {
         faTractor,
         faRoad,
         faTrain,
-        faCheckDouble
+        faCheckDouble,
+        faFaceSmileBeam
     );
 }
